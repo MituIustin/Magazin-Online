@@ -12,7 +12,7 @@ namespace Magazin_Online.Models
         public string Description { get; set; }
         public string Image {  get; set; }
 
-        public string? UserId { get; set; 
+        public string? UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual Category Category { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
