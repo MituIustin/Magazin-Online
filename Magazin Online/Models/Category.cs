@@ -6,7 +6,7 @@ namespace Magazin_Online.Models
 {
     public class Category
     {
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
         public string Name { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<Product> Products { get; set; }

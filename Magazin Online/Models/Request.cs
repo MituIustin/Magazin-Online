@@ -7,8 +7,11 @@ namespace Magazin_Online.Models
     public class Request
     {
         [Key]
-        public int RequestId { get; set; }
+        public string RequestId { get; set; }
         public string Message { get; set; }
+
+        [ForeignKey("User")]
+        public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual Product Product { get; set; }
     }
