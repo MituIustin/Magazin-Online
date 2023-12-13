@@ -4,6 +4,7 @@ using Magazin_Online.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazin_Online.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231213125910_FKS2")]
+    partial class FKS2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +31,6 @@ namespace Magazin_Online.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("BasketId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -105,15 +104,16 @@ namespace Magazin_Online.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("OrderId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BasketId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
 
                     b.HasIndex("UserId")
                         .IsUnique()
@@ -173,9 +173,6 @@ namespace Magazin_Online.Data.Migrations
                     b.Property<string>("OrderId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("BasketId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -207,9 +204,6 @@ namespace Magazin_Online.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RequestId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -238,12 +232,14 @@ namespace Magazin_Online.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("RequestId");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -417,9 +413,7 @@ namespace Magazin_Online.Data.Migrations
                 {
                     b.HasOne("Magazin_Online.Models.Order", "Order")
                         .WithOne("Basket")
-                        .HasForeignKey("Magazin_Online.Models.Basket", "BasketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Magazin_Online.Models.Basket", "OrderId");
 
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
                         .WithOne("Basket")
@@ -433,7 +427,7 @@ namespace Magazin_Online.Data.Migrations
             modelBuilder.Entity("Magazin_Online.Models.Category", b =>
                 {
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
-                        .WithMany("Categories")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -456,7 +450,7 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>
                 {
-                    b.HasOne("Magazin_Online.Models.Basket", "Basket")
+                    b.HasOne("Magazin_Online.Models.Basket", null)
                         .WithMany("Products")
                         .HasForeignKey("BasketId");
 
@@ -465,10 +459,8 @@ namespace Magazin_Online.Data.Migrations
                         .HasForeignKey("CategoryId");
 
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Basket");
 
                     b.Navigation("Category");
 
@@ -478,10 +470,8 @@ namespace Magazin_Online.Data.Migrations
             modelBuilder.Entity("Magazin_Online.Models.Request", b =>
                 {
                     b.HasOne("Magazin_Online.Models.Product", "Product")
-                        .WithOne("Request")
-                        .HasForeignKey("Magazin_Online.Models.Request", "RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
                         .WithMany("Requests")
@@ -562,11 +552,7 @@ namespace Magazin_Online.Data.Migrations
                 {
                     b.Navigation("Basket");
 
-                    b.Navigation("Categories");
-
                     b.Navigation("Comments");
-
-                    b.Navigation("Products");
 
                     b.Navigation("Requests");
 
@@ -591,8 +577,6 @@ namespace Magazin_Online.Data.Migrations
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Request");
 
                     b.Navigation("Reviews");
                 });
