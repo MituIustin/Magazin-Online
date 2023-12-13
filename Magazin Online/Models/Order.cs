@@ -11,7 +11,9 @@ namespace Magazin_Online.Models
         public string Location {  get; set; }
         public int ShippingPrice { get; set; }
 
-        public virtual Basket Basket { get; set; }
+        [ForeignKey("Basket")]
+        public string? BasketId { get; set; }
+        public virtual Basket ? Basket { get; set; }
 
     }
 }

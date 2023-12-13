@@ -8,14 +8,20 @@ namespace Magazin_Online.Models
     {
         [Key]
         public string BasketId { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+
+        [ForeignKey("Product")]
+        public string? ProductId { get; set; }
+        public virtual ICollection<Product> ? Products { get; set; }
+
 
         [ForeignKey("User")]
-        public string UserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public string ? UserId { get; set; }
+        public virtual ApplicationUser ? User { get; set; }
+
 
         [ForeignKey("Order")]
-        public string OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        public string ? OrderId { get; set; }
+        public virtual Order ? Order { get; set; }
+
     }
 }
