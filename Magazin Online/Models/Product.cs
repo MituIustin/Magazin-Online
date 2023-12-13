@@ -13,10 +13,5 @@ namespace Magazin_Online.Models
         public string Image {  get; set; }
         public string? UserId { get; set; }
         public virtual ApplicationUser? User { get; set; }
-
-        //public virtual Category CategoryId { get; set; }
-        
-        //public virtual Basket BasketId { get; set; }
-
     }
 }
