@@ -10,6 +10,7 @@ namespace Magazin_Online.Data
             : base(options)
         {
         }
+
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -33,5 +34,9 @@ namespace Magazin_Online.Data
             .WithMany(c => c.Requests)
             .HasForeignKey(a => a.UserId);
         }
+
+        
+
+
     }
 }

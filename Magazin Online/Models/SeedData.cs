@@ -35,8 +35,8 @@ serviceProvider)
                 new IdentityRole
                 {
                     Id = "17ee7c66-59b2-4140-8cef-9caf2dd0a061",
-                    Name = "Editor",
-                    NormalizedName = "Editor".ToUpper()
+                    Name = "Contributor",
+                    NormalizedName = "Contributor".ToUpper()
                 },
                 new IdentityRole
                 {
@@ -74,12 +74,12 @@ serviceProvider)
                 {
                     Id = "692fc6bd-871e-4fb2-893e-f7213727f9b1",
                     // primary key
-                    UserName = "editor@test.com",
+                    UserName = "contributor@test.com",
                     EmailConfirmed = true,
-                    NormalizedEmail = "EDITOR@TEST.COM",
-                    Email = "editor@test.com",
-                    NormalizedUserName = "EDITOR@TEST.COM",
-                    PasswordHash = hasher.HashPassword(null, "Editor1!")
+                    NormalizedEmail = "CONTRIBUTORR@TEST.COM",
+                    Email = "contributor@test.com",
+                    NormalizedUserName = "CONTRIBUTOR@TEST.COM",
+                    PasswordHash = hasher.HashPassword(null, "Contributor1!")
                 },
 
                 new ApplicationUser
