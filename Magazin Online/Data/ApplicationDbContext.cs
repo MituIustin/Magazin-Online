@@ -10,5 +10,7 @@ namespace Magazin_Online.Data
             : base(options)
         {
         }
+        public DbSet<Product> Products { get; set; }
+
     }
 }
