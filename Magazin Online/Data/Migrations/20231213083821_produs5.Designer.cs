@@ -4,6 +4,7 @@ using Magazin_Online.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazin_Online.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231213083821_produs5")]
+    partial class produs5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,12 +109,12 @@ namespace Magazin_Online.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserIdId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserIdId");
 
                     b.ToTable("Products");
                 });
@@ -256,11 +258,11 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>
                 {
-                    b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
+                    b.HasOne("Magazin_Online.Models.ApplicationUser", "UserId")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserIdId");
 
-                    b.Navigation("User");
+                    b.Navigation("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
