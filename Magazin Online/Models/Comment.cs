@@ -9,7 +9,7 @@ namespace Magazin_Online.Models
         [Key]
         public string CommentId { get; set; }
         public string Content { get; set; }
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime data_ora { get; set; } = DateTime.Now;
 
         [ForeignKey("User")]
         public string? UserId { get; set; }

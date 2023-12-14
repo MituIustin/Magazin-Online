@@ -34,8 +34,7 @@ namespace Magazin_Online.Models
 
         public virtual ICollection<Comment> ? Comments { get; set; }
         public virtual ICollection<Review> ? Reviews { get; set; }
+        public virtual ICollection<BasketProduct> ? BasketProducts { get; set; }
 
-       
- 
     }
 }

@@ -17,12 +17,27 @@ namespace Magazin_Online.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Order > Orders { get; set; }
         public DbSet<Review> Reviews { get; set; }
-
         public DbSet<Request> Requests { get; set; }
+        public DbSet<BasketProduct> BasketProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<BasketProduct>()
+                .HasKey(ac => new { ac.ProductId, ac.BasketId });
+
+            // M PRODUCT se afla in M BASKET
+
+            modelBuilder.Entity<BasketProduct>()
+                .HasOne(ac => ac.Product)
+                .WithMany(ac => ac.BasketProducts)
+                .HasForeignKey(ac => ac.ProductId);
+
+            modelBuilder.Entity<BasketProduct>()
+                .HasOne(ac => ac.Basket)
+                .WithMany(ac => ac.BasketProducts)
+                .HasForeignKey(ac => ac.BasketId);
 
             // 1 USER    detine    1 BASKET
 
@@ -94,13 +109,6 @@ namespace Magazin_Online.Data
               .HasOne<ApplicationUser>(a => a.User)
               .WithMany(b => b.Categories)
               .HasForeignKey(b => b.UserId);
-
-            // 1 BASKET    contine    M PRODUCT
-
-            modelBuilder.Entity<Product>()
-               .HasOne<Basket>(a => a.Basket)
-               .WithMany(b => b.Products)
-               .HasForeignKey(b => b.BasketId);
 
             // 1 CATEGORY   contine    M PRODUCT
 

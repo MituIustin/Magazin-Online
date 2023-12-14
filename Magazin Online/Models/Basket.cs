@@ -9,10 +9,7 @@ namespace Magazin_Online.Models
         [Key]
         public string BasketId { get; set; }
 
-        [ForeignKey("Product")]
-        public string? ProductId { get; set; }
-        public virtual ICollection<Product> ? Products { get; set; }
-
+        public virtual ICollection<BasketProduct> ? BasketProducts { get; set; }
 
         [ForeignKey("User")]
         public string ? UserId { get; set; }
