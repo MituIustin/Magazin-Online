@@ -5,11 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Magazin_Online.Models
 {
     public class Review
-    { 
-        public int ReviewId { get; set; }
+    {
+        [Key]
+        public string ReviewId { get; set; }
         public float Rating { get; set; }
-        public string Description { get; set; }
-        public virtual ApplicationUser User { get; set; }
-        public virtual Product Product { get; set; }
+        public string ? Description { get; set; }
+
+        [ForeignKey("User")]
+        public string ? UserId { get; set; }
+        public virtual ApplicationUser ? User { get; set; }
+
+        [ForeignKey("Product")]
+        public string ? ProductId { get; set; }
+        public virtual Product ? Product { get; set; }
     }
 }
