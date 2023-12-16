@@ -13,7 +13,6 @@ namespace Magazin_Online.Models
         public string? UserId { get; set; }
         public virtual ApplicationUser ? User { get; set; }
 
-
         public virtual ICollection<Product> ? Products { get; set; }
     }
 }

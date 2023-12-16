@@ -4,6 +4,7 @@ using Magazin_Online.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazin_Online.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231216174100_reparation3")]
+    partial class reparation3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,13 +100,11 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Basket", b =>
                 {
+                    b.Property<string>("BasketId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("BasketId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -120,12 +120,11 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.BasketProduct", b =>
                 {
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BasketId")
-                        .HasColumnType("int");
+                    b.Property<string>("BasketId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ProductId", "BasketId");
 
@@ -136,12 +135,8 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Category", b =>
                 {
-
-                    b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -159,20 +154,15 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Comment", b =>
                 {
-
-                    b.Property<int>("CommentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"), 1L, 1);
+                    b.Property<string>("CommentId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -191,15 +181,11 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Order", b =>
                 {
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
-
-                    b.Property<int?>("BasketId")
-                        .HasColumnType("int");
+                    b.Property<string>("BasketId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -215,18 +201,14 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>
                 {
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("BasketId")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
-
-                    b.Property<int?>("BasketId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -236,12 +218,8 @@ namespace Magazin_Online.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("RequestId")
-                        .HasColumnType("int");
+                    b.Property<string>("RequestId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -263,17 +241,15 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Request", b =>
                 {
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
+                    b.Property<string>("RequestId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -287,19 +263,14 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Review", b =>
                 {
-
-                    b.Property<int>("ReviewId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"), 1L, 1);
+                    b.Property<string>("ReviewId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("Rating")
                         .HasColumnType("real");
