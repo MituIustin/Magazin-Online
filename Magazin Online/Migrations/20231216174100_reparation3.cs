@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace Magazin_Online.Data.Migrations
+namespace Magazin_Online.Migrations
 {
-    public partial class produs4 : Migration
+    public partial class reparation3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
