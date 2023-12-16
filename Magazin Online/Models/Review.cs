@@ -7,7 +7,7 @@ namespace Magazin_Online.Models
     public class Review
     {
         [Key]
-        public string ReviewId { get; set; }
+        public int ReviewId { get; set; }
         public float Rating { get; set; }
         public string ? Description { get; set; }
 
@@ -16,7 +16,7 @@ namespace Magazin_Online.Models
         public virtual ApplicationUser ? User { get; set; }
 
         [ForeignKey("Product")]
-        public string ? ProductId { get; set; }
+        public int ? ProductId { get; set; }
         public virtual Product ? Product { get; set; }
     }
 }

@@ -7,12 +7,12 @@ namespace Magazin_Online.Models
     public class Order
     {
         [Key]
-        public string OrderId { get; set; }
+        public int OrderId { get; set; }
         public string Location {  get; set; }
         public int ShippingPrice { get; set; }
 
         [ForeignKey("Basket")]
-        public string? BasketId { get; set; }
+        public int? BasketId { get; set; }
         public virtual Basket ? Basket { get; set; }
 
     }

@@ -7,7 +7,7 @@ namespace Magazin_Online.Models
     public class Request
     {
         [Key]
-        public string RequestId { get; set; }
+        public int RequestId { get; set; }
         public string Message { get; set; }
 
 
@@ -17,7 +17,7 @@ namespace Magazin_Online.Models
 
 
         [ForeignKey("Product")]
-        public string? ProductId { get; set; }
+        public int? ProductId { get; set; }
         public virtual Product? Product { get; set; }
     }
 }

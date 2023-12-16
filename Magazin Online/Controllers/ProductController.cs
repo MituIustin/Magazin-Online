@@ -30,11 +30,13 @@ namespace Magazin_Online.Controllers
             _roleManager = roleManager;
         }
 
+        
         public IActionResult Index()
         {
+
             int _perPage = 3;
 
-            var products = db.Products.Include("User");
+            var products = db.Products.Include("User").Where(p=> p.IsAccepted==true);
             if (TempData.ContainsKey("message"))
             {
                 ViewBag.message =
@@ -84,7 +86,7 @@ namespace Magazin_Online.Controllers
 
 
 
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "Contributor,Admin")]
         public IActionResult New()
         {
             Product product = new Product();
@@ -92,7 +94,7 @@ namespace Magazin_Online.Controllers
             return View(product);
         }
 
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "Contributor,Admin")]
         [HttpPost]
         public IActionResult New(Product product)
         {
@@ -103,6 +105,14 @@ namespace Magazin_Online.Controllers
 
             if (ModelState.IsValid)
             {
+                if (User.IsInRole("Admin"))
+                {
+                    product.IsAccepted = true;
+                }
+                else
+                {
+                    product.IsAccepted = false;
+                }
                 db.Products.Add(product);
                 db.SaveChanges();
                 TempData["message"] = "Produsul a fost adaugat";
@@ -118,7 +128,7 @@ namespace Magazin_Online.Controllers
         {
             ViewBag.AfisareButoane = false;
 
-            if (User.IsInRole("Editor"))
+            if (User.IsInRole("Contributor"))
             {
                 ViewBag.AfisareButoane = true;
             }
