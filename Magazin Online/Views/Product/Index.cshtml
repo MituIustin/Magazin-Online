@@ -2,4 +2,54 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewBag.Title = "Index";
 }
+<br />
+
+<h2 class="text-center">Afisare produse</h2>
+
+<br />
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+@foreach (Magazin_Online.Models.Product product in ViewBag.Products)
+{
+    <div class="card">
+        @Html.Partial("ProductInfo", product )
+        <a class="btn btn-success" href="/Product/Show/@product.ProductId">Afisare articol</a>
+    </div>
+}
+
+
+
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link"
+                   href="/Product/Index?page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                   href="/Product/Index?page=@i">@(i)</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link"
+                   href="/Product/Index?page=@(ViewBag.lastPage)" aria-
+                   label="Next">
+
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

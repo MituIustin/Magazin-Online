@@ -7,7 +7,7 @@ namespace Magazin_Online.Models
     public class Comment
     {
         [Key]
-        public string CommentId { get; set; }
+        public int CommentId { get; set; }
         public string Content { get; set; }
         public DateTime data_ora { get; set; } = DateTime.Now;
 
@@ -16,7 +16,7 @@ namespace Magazin_Online.Models
         public virtual ApplicationUser? User { get; set; }
 
         [ForeignKey("Product")]
-        public string? ProductId { get; set; }
+        public int? ProductId { get; set; }
         public virtual Product ? Product { get; set; }
     }
 }

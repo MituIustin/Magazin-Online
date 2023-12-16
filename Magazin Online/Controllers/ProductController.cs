@@ -30,17 +30,63 @@ namespace Magazin_Online.Controllers
             _roleManager = roleManager;
         }
 
+        
         public IActionResult Index()
         {
-            //var products = db.Product.Include("Category").Include("User");
 
-            // ViewBag.OriceDenumireSugestiva
-            //ViewBag.Articles = products;
-            
+            int _perPage = 3;
+
+            var products = db.Products.Include("User").Where(p=> p.IsAccepted==true);
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.message =
+                TempData["message"].ToString();
+                ViewBag.Alert = TempData["messageType"];
+            }
+
+            int total_products=products.Count();
+            var currentPage =Convert.ToInt32(HttpContext.Request.Query["page"]);
+            var offset = 0;
+
+            if (!currentPage.Equals(0))
+            {
+                offset = (currentPage - 1) * _perPage;
+            }
+
+            var paginatedProducts = products.Skip(offset).Take(_perPage);
+
+            ViewBag.lastPage = Math.Ceiling((float)total_products/(float)_perPage);
+
+            ViewBag.Products = paginatedProducts;
+
+
             return View();
         }
+        public IActionResult Show(int id)
+        {
+            Product product = db.Products.Include("Category")
+                                         .Include("User")
+                                         .Include("Comments")
+                                         .Include("Comments.User")
+                                         .Where(prod => prod.ProductId == id)
+                                         .First();
 
-        [Authorize(Roles = "Editor,Admin")]
+
+            SetAccessRights();
+
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.Message = TempData["message"];
+                ViewBag.Alert = TempData["messageType"];
+            }
+
+            return View(product);
+        }
+
+
+
+
+        [Authorize(Roles = "Contributor,Admin")]
         public IActionResult New()
         {
             Product product = new Product();
@@ -48,7 +94,7 @@ namespace Magazin_Online.Controllers
             return View(product);
         }
 
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "Contributor,Admin")]
         [HttpPost]
         public IActionResult New(Product product)
         {
@@ -59,6 +105,14 @@ namespace Magazin_Online.Controllers
 
             if (ModelState.IsValid)
             {
+                if (User.IsInRole("Admin"))
+                {
+                    product.IsAccepted = true;
+                }
+                else
+                {
+                    product.IsAccepted = false;
+                }
                 db.Products.Add(product);
                 db.SaveChanges();
                 TempData["message"] = "Produsul a fost adaugat";
@@ -70,6 +124,18 @@ namespace Magazin_Online.Controllers
                 return View(product);
             }
         }
+        private void SetAccessRights()
+        {
+            ViewBag.AfisareButoane = false;
 
+            if (User.IsInRole("Contributor"))
+            {
+                ViewBag.AfisareButoane = true;
+            }
+
+            ViewBag.EsteAdmin = User.IsInRole("Admin");
+
+            ViewBag.UserCurent = _userManager.GetUserId(User);
+        }
     }
 }

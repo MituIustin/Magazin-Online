@@ -1,0 +1,42 @@
+﻿@model Magazin_Online.Models.Product
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+<br/>
+
+<div class="card">
+
+    @Html.Partial("ProductInfo", Model)
+
+    @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+    {
+        <div class="d-flex flex-row justify-content-between p-3 border-1 border-top">
+
+            <a class="btn btn-success" href="/Product/Edit/@Model.ProductId">Editeaza articol</a>
+
+            <form method="post" action="/Product/Delete/@Model.ProductId">
+
+                <button class="btn btn-danger" type="submit">Sterge articol</button>
+
+            </form>
+
+        </div>
+    }
+    <form method="post" asp-controller="Product">
+        <input type="hidden" name="ProductId" value="@Model.ProductId" />
+        <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
+            <div>
+                <input type="submit" class="btn btn-success alert-success" value="+" />
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+

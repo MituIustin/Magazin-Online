@@ -6,7 +6,7 @@ namespace Magazin_Online.Models
 {
     public class Category
     {
-        public string CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
 
         [ForeignKey("User")]
