@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Magazin_Online.Data.Migrations
+namespace Magazin_Online.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231213123530_FKS")]
-    partial class FKS
+    [Migration("20231216174117_reparation")]
+    partial class reparation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,12 +32,14 @@ namespace Magazin_Online.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("BasketId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -45,11 +47,9 @@ namespace Magazin_Online.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -100,20 +100,16 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Basket", b =>
                 {
-                    b.Property<string>("BasketId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("BasketId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("OrderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BasketId");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique()
-                        .HasFilter("[OrderId] IS NOT NULL");
 
                     b.HasIndex("UserId")
                         .IsUnique()
@@ -122,10 +118,28 @@ namespace Magazin_Online.Data.Migrations
                     b.ToTable("Baskets");
                 });
 
+            modelBuilder.Entity("Magazin_Online.Models.BasketProduct", b =>
+                {
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BasketId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "BasketId");
+
+                    b.HasIndex("BasketId");
+
+                    b.ToTable("BasketProducts");
+                });
+
             modelBuilder.Entity("Magazin_Online.Models.Category", b =>
                 {
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -143,21 +157,24 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Comment", b =>
                 {
-                    b.Property<string>("CommentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"), 1L, 1);
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("data_ora")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("CommentId");
 
@@ -170,8 +187,14 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Order", b =>
                 {
-                    b.Property<string>("OrderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+
+                    b.Property<int?>("BasketId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -187,14 +210,17 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>
                 {
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("BasketId")
-                        .HasColumnType("nvarchar(450)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
 
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("BasketId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -203,6 +229,12 @@ namespace Magazin_Online.Data.Migrations
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("RequestId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -224,22 +256,20 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Request", b =>
                 {
-                    b.Property<string>("RequestId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RequestId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("RequestId");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -248,14 +278,17 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Review", b =>
                 {
-                    b.Property<string>("ReviewId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"), 1L, 1);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<float>("Rating")
                         .HasColumnType("real");
@@ -413,7 +446,9 @@ namespace Magazin_Online.Data.Migrations
                 {
                     b.HasOne("Magazin_Online.Models.Order", "Order")
                         .WithOne("Basket")
-                        .HasForeignKey("Magazin_Online.Models.Basket", "OrderId");
+                        .HasForeignKey("Magazin_Online.Models.Basket", "BasketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
                         .WithOne("Basket")
@@ -424,10 +459,29 @@ namespace Magazin_Online.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Magazin_Online.Models.BasketProduct", b =>
+                {
+                    b.HasOne("Magazin_Online.Models.Basket", "Basket")
+                        .WithMany("BasketProducts")
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Magazin_Online.Models.Product", "Product")
+                        .WithMany("BasketProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basket");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Magazin_Online.Models.Category", b =>
                 {
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Categories")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -440,7 +494,7 @@ namespace Magazin_Online.Data.Migrations
                         .HasForeignKey("ProductId");
 
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Product");
@@ -450,8 +504,8 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>
                 {
-                    b.HasOne("Magazin_Online.Models.Basket", null)
-                        .WithMany("Products")
+                    b.HasOne("Magazin_Online.Models.Basket", "Basket")
+                        .WithMany()
                         .HasForeignKey("BasketId");
 
                     b.HasOne("Magazin_Online.Models.Category", "Category")
@@ -459,8 +513,10 @@ namespace Magazin_Online.Data.Migrations
                         .HasForeignKey("CategoryId");
 
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Basket");
 
                     b.Navigation("Category");
 
@@ -470,11 +526,13 @@ namespace Magazin_Online.Data.Migrations
             modelBuilder.Entity("Magazin_Online.Models.Request", b =>
                 {
                     b.HasOne("Magazin_Online.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
+                        .WithOne("Request")
+                        .HasForeignKey("Magazin_Online.Models.Request", "RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Requests")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Product");
@@ -489,7 +547,7 @@ namespace Magazin_Online.Data.Migrations
                         .HasForeignKey("ProductId");
 
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Product");
@@ -551,11 +609,21 @@ namespace Magazin_Online.Data.Migrations
             modelBuilder.Entity("Magazin_Online.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Basket");
+
+                    b.Navigation("Categories");
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("Requests");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("Magazin_Online.Models.Basket", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("BasketProducts");
                 });
 
             modelBuilder.Entity("Magazin_Online.Models.Category", b =>
@@ -570,7 +638,11 @@ namespace Magazin_Online.Data.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>
                 {
+                    b.Navigation("BasketProducts");
+
                     b.Navigation("Comments");
+
+                    b.Navigation("Request");
 
                     b.Navigation("Reviews");
                 });

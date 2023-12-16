@@ -7,7 +7,7 @@ namespace Magazin_Online.Models
     public class Basket
     {
         [Key]
-        public string BasketId { get; set; }
+        public int BasketId { get; set; }
 
         public virtual ICollection<BasketProduct> ? BasketProducts { get; set; }
 
@@ -17,7 +17,7 @@ namespace Magazin_Online.Models
 
 
         [ForeignKey("Order")]
-        public string ? OrderId { get; set; }
+        public int ? OrderId { get; set; }
         public virtual Order ? Order { get; set; }
 
     }

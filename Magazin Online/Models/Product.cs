@@ -7,13 +7,14 @@ namespace Magazin_Online.Models
     public class Product
     {
         [Key]
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image {  get; set; }
+        public bool IsAccepted { get; set; }
 
         [ForeignKey("Basket")]
-        public string? BasketId { get; set; }
+        public int? BasketId { get; set; }
         public virtual Basket? Basket { get; set; }
 
 
@@ -23,12 +24,12 @@ namespace Magazin_Online.Models
 
 
         [ForeignKey("Category")]
-        public string? CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public virtual Category ? Category { get; set; }
 
 
         [ForeignKey("Request")]
-        public string? RequestId { get; set; }
+        public int? RequestId { get; set; }
         public virtual Request ? Request { get; set; }
 
 
