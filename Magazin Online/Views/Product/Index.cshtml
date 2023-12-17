@@ -4,6 +4,20 @@
 @{
     ViewBag.Title = "Index";
 }
+
+
+<div class="text-center">
+    @if (User.IsInRole("Admin") || User.IsInRole("Contributor"))
+    {
+        <a class="btn btn-primary" href="/Product/New">Adaugare articol</a>
+    }
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-info" href="/Request/Index">Request-uri</a>
+    }
+</div>
+
 <br />
 
 <h2 class="text-center">Afisare produse</h2>
@@ -23,6 +37,7 @@
         <a class="btn btn-success" href="/Product/Show/@product.ProductId">Afisare articol</a>
     </div>
 }
+
 
 
 

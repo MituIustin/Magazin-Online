@@ -98,13 +98,11 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Basket", b =>
                 {
-
                     b.Property<int>("BasketId")
                         .HasColumnType("int");
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
-
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -120,7 +118,6 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.BasketProduct", b =>
                 {
-
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
@@ -136,7 +133,6 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Category", b =>
                 {
-
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
@@ -159,7 +155,6 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Comment", b =>
                 {
-
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
@@ -169,7 +164,6 @@ namespace Magazin_Online.Migrations
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
@@ -191,7 +185,6 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Order", b =>
                 {
-
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
@@ -215,7 +208,6 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>
                 {
-
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
@@ -235,7 +227,6 @@ namespace Magazin_Online.Migrations
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
 
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
@@ -263,14 +254,12 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Request", b =>
                 {
-
                     b.Property<int>("RequestId")
                         .HasColumnType("int");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
@@ -287,7 +276,6 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.Review", b =>
                 {
-
                     b.Property<int>("ReviewId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
@@ -296,7 +284,6 @@ namespace Magazin_Online.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
