@@ -35,7 +35,19 @@
                 @Html.TextArea("Image",null,new{@class="form-control"})
 
                 <br />
+                @Html.Label("Price","Pret produs")
+                <br />
+                @Html.TextArea("Price",null,new{@class="form-control"})
 
+
+                <br />
+                <label>Selectati categoria</label>
+                @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
+                "Selectati categoria", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
+                <br />
+
+                <br />
                 <br />
                     
                 <button class="btn btn-success" type="submit">Adauga articol</button>

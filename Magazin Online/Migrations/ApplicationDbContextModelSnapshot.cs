@@ -231,6 +231,9 @@ namespace Magazin_Online.Migrations
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.Property<int?>("RequestId")
                         .HasColumnType("int");
 

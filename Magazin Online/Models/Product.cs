@@ -11,6 +11,7 @@ namespace Magazin_Online.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image {  get; set; }
+        public int Price { get; set; }
         public bool IsAccepted { get; set; }
 
         [ForeignKey("Basket")]
@@ -33,6 +34,9 @@ namespace Magazin_Online.Models
         public virtual Request ? Request { get; set; }
 
 
+
+        [NotMapped]
+        public IEnumerable<SelectListItem>? Categ { get; set; }
         public virtual ICollection<Comment> ? Comments { get; set; }
         public virtual ICollection<Review> ? Reviews { get; set; }
         public virtual ICollection<BasketProduct> ? BasketProducts { get; set; }
