@@ -56,5 +56,82 @@ namespace Magazin_Online.Controllers
                 return View();
             }
         }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(int id)
+        {
+            Category category = db.Categories.Find(id);
+
+            if (User.IsInRole("Admin"))
+            {
+                db.Categories.Remove(category);
+                db.SaveChanges();
+                TempData["message"] = "Categoria a fost stersa";
+                TempData["messageType"] = "alert-success";
+                return RedirectToAction("Index","Category");
+            }
+
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa stergeti aceasta categorie.";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index", "Category");
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Edit(int id)
+        {
+            // Găsește categoria după id
+            Category category = db.Categories.Find(id);
+
+            if (category == null)
+            {
+                TempData["message"] = "Categoria nu a fost găsită.";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index", "Category");
+            }
+
+            return View(category);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Edit(Category model)
+        {
+            if (ModelState.IsValid)
+            {
+                Category category = db.Categories.Find(model.CategoryId);
+
+                if (category == null)
+                {
+                    TempData["message"] = "Categoria nu a fost găsită.";
+                    TempData["messageType"] = "alert-danger";
+                    return RedirectToAction("Index", "Category");
+                }
+
+                category.Name = model.Name;
+
+                try
+                {
+                    db.SaveChanges();
+
+                    TempData["message"] = "Categoria a fost modificată cu succes.";
+                    TempData["messageType"] = "alert-success";
+                    return RedirectToAction("Index", "Category");
+                }
+                catch (Exception)
+                {
+                    TempData["message"] = "A apărut o eroare la salvarea modificărilor.";
+                    TempData["messageType"] = "alert-danger";
+                    return View(model);
+                }
+            }
+
+            return View(model);
+        }
+
+
+
     }
 }
