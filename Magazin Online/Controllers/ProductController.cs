@@ -124,6 +124,39 @@ namespace Magazin_Online.Controllers
                 return View(product);
             }
         }
+
+        public IActionResult Accept(int id)
+        {
+            Product product=db.Products.Find(id);
+            product.IsAccepted=true;
+            db.SaveChanges();
+            return RedirectToAction("Index", "Request");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(int id)
+        {
+            Product product = db.Products.Include("Comments")
+                                         .Where(p => p.ProductId == id)
+                                         .First();
+
+            if (product.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
+            {
+                db.Products.Remove(product);
+                db.SaveChanges();
+                TempData["message"] = "Articolul a fost sters";
+                TempData["messageType"] = "alert-success";
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa stergeti un articol care nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
+        }
         private void SetAccessRights()
         {
             ViewBag.AfisareButoane = false;

@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Lista de Produse";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nume Produs</th>
+            <th>Preț</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var produs in ViewBag.Requests)
+        {
+            <tr>
+                <td>@produs.Title</td>
+                <td>@produs.Description</td>
+                <td>@produs.Image</td>
+                <td>
+                    <a class="btn btn-success" href="/Product/Show/@produs.ProductId">Afisare articol</a>
+                    <a class="btn btn-success" href="/Product/Accept/@produs.ProductId">Accepta articol</a>
+                    <form method="post" action="/Product/Delete/@produs.ProductId">
+                        <button class="btn btn-danger" type="submit">Sterge articol</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

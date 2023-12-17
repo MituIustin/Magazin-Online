@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "mssql1": {
-      "serviceConnectorResourceId": "",
       "secretStore": null,
       "resourceId": null,
       "type": "mssql.local",
