@@ -55,7 +55,20 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}");
 
 
+app.MapControllerRoute(
+    name: "Show",
+    pattern: "Product/Show/{id}",
+    defaults: new { controller = "Product", action = "Show" });
 
+app.MapControllerRoute(
+    name: "Accepted",
+    pattern: "Product/Accept/{id}",
+    defaults: new { controller = "Product", action = "Accept" });
+
+app.MapControllerRoute(
+    name: "Deleted",
+    pattern: "Product/Delete/{id}",
+    defaults: new { controller = "Product", action = "Delete" });
 
 
 app.MapRazorPages();
