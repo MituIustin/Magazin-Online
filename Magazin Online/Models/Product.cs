@@ -12,6 +12,7 @@ namespace Magazin_Online.Models
         public string Description { get; set; }
         public string Image {  get; set; }
         public int Price { get; set; }
+
         public bool IsAccepted { get; set; }
 
         [ForeignKey("Basket")]
