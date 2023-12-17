@@ -4,6 +4,7 @@ using Magazin_Online.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Magazin_Online.Controllers
@@ -91,6 +92,8 @@ namespace Magazin_Online.Controllers
         {
             Product product = new Product();
 
+            product.Categ = GetAllCategories();
+
             return View(product);
         }
 
@@ -170,5 +173,26 @@ namespace Magazin_Online.Controllers
 
             ViewBag.UserCurent = _userManager.GetUserId(User);
         }
+
+        [NonAction]
+        public IEnumerable<SelectListItem> GetAllCategories()
+        {
+            var selectList = new List<SelectListItem>();
+
+            var categories = from cat in db.Categories
+                             select cat;
+
+            foreach (var category in categories)
+            {
+                
+                selectList.Add(new SelectListItem
+                {
+                    Value = category.CategoryId.ToString(),
+                    Text = category.Name.ToString()
+                });
+            }
+            return selectList;
+        }
+
     }
 }
