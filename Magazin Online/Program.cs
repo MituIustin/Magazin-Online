@@ -56,19 +56,32 @@ app.MapControllerRoute(
 
 
 app.MapControllerRoute(
-    name: "Show",
+    name: "ShowProduct",
     pattern: "Product/Show/{id}",
     defaults: new { controller = "Product", action = "Show" });
 
 app.MapControllerRoute(
-    name: "Accepted",
+    name: "AcceptProduct",
     pattern: "Product/Accept/{id}",
     defaults: new { controller = "Product", action = "Accept" });
 
 app.MapControllerRoute(
-    name: "Deleted",
+    name: "DeleteProduct",
     pattern: "Product/Delete/{id}",
     defaults: new { controller = "Product", action = "Delete" });
+
+
+app.MapControllerRoute(
+    name: "DeleteCategory",
+    pattern: "Category/Delete/{id}",
+    defaults: new { controller = "Category", action = "Delete" });
+
+app.MapControllerRoute(
+    name: "EditCategory",
+    pattern: "Category/Edit/{id}",
+    defaults: new { controller = "Category", action = "Edit" });
+
+
 
 
 app.MapRazorPages();
