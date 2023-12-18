@@ -7,6 +7,8 @@
 
     <div class="card-text">@Model.Description</div>
 
+    <img src="data:image/png;base64,@Convert.ToBase64String(Model.Photo)" alt="Product Photo" style="max-width: 200px; max-height: 200px;" />
+
     <div class="d-flex justify-content-between flex-row mt-5">
 
         <div><i class="bi bi-person"></i> @Model.Price Lei</div>

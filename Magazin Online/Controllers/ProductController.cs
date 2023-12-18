@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.IO;
 using Magazin_Online.Data;
 using Magazin_Online.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -93,21 +94,22 @@ namespace Magazin_Online.Controllers
             Product product = new Product();
 
             product.Categ = GetAllCategories();
-
             return View(product);
         }
 
         [Authorize(Roles = "Contributor,Admin")]
         [HttpPost]
-        public IActionResult New(Product product)
+        public async Task<IActionResult> New(Product product, IFormFile file)
         {
-            // preluam id-ul utilizatorului care posteaza articolul
-
             product.UserId = _userManager.GetUserId(User);
-
-
-            if (ModelState.IsValid)
+            var stream = new MemoryStream();
+            await file.CopyToAsync(stream);
+            product.Photo = stream.ToArray();
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            
+            if (ModelState.IsValid && product.Photo != null)
             {
+                
                 if (User.IsInRole("Admin"))
                 {
                     product.IsAccepted = true;
@@ -124,6 +126,8 @@ namespace Magazin_Online.Controllers
             }
             else
             {
+                product.Categ = GetAllCategories();
+
                 return View(product);
             }
         }
@@ -185,14 +189,15 @@ namespace Magazin_Online.Controllers
             foreach (var category in categories)
             {
                 
-                selectList.Add(new SelectListItem
+                selectList.Add(new SelectListItem()
                 {
                     Value = category.CategoryId.ToString(),
                     Text = category.Name.ToString()
-                });
+                }); 
             }
             return selectList;
         }
+
 
     }
 }

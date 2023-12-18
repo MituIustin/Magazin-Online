@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Magazin_Online.Migrations
 {
-    public partial class reparation : Migration
+    public partial class terogeu : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -223,9 +223,9 @@ namespace Magazin_Online.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     IsAccepted = table.Column<bool>(type: "bit", nullable: false),
+                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     BasketId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: true),

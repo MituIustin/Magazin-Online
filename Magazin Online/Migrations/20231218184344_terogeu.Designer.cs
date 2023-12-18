@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazin_Online.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231217164834_reparation")]
-    partial class reparation
+    [Migration("20231218184344_terogeu")]
+    partial class terogeu
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -226,12 +226,12 @@ namespace Magazin_Online.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
+
+                    b.Property<byte[]>("Photo")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
