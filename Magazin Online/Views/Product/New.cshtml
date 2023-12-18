@@ -8,7 +8,7 @@
         <div class="col-6 offset-3">
 
             @using (Html.BeginForm(actionName: "New", controllerName: "Product",
-            method: FormMethod.Post))
+            method: FormMethod.Post,new { enctype = "multipart/form-data" }))
             {
 
                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -29,24 +29,32 @@
                 @Html.ValidationMessage("Description", null, new { @class = "text-danger" })
                 <br />
 
+
+                @Html.Label("Photo", "Imagine produs")
                 <br />
-                @Html.Label("Image","Imagine produs")
-                <br/>
-                @Html.TextArea("Image",null,new{@class="form-control"})
+                <input type="file" name="file" class="form-control" />
+                <br />
+
 
                 <br />
                 @Html.Label("Price","Pret produs")
                 <br />
                 @Html.TextArea("Price",null,new{@class="form-control"})
 
-
-                <br />
                 <label>Selectati categoria</label>
+
                 @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
                 "Selectati categoria", new { @class = "form-control" })
+
                 @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
                 <br />
 
+                <br />
+
+
+                
+
+                
                 <br />
                 <br />
                     
