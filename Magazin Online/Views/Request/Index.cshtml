@@ -17,9 +17,9 @@
         @foreach (var produs in ViewBag.Requests)
         {
             <tr>
+                <td>@produs.ProductId</td>
                 <td>@produs.Title</td>
                 <td>@produs.Description</td>
-                <td>@produs.Image</td>
                 <td>
                     <a class="btn btn-success" href="/Product/Show/@produs.ProductId">Afisare articol</a>
                     <a class="btn btn-success" href="/Product/Accept/@produs.ProductId">Accepta articol</a>
@@ -31,4 +31,3 @@
         }
     </tbody>
 </table>
-

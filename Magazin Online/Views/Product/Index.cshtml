@@ -16,6 +16,12 @@
     {
         <a class="btn btn-info" href="/Request/Index">Request-uri</a>
     }
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-info" href="/Category/Index">Vezi categorii</a>
+    }
+    
 </div>
 
 <br />
