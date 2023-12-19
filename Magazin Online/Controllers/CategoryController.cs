@@ -62,6 +62,16 @@ namespace Magazin_Online.Controllers
         {
             Category category = db.Categories.Find(id);
 
+            var productsWithCategory = db.Products.Where(p => p.CategoryId == id).ToList();
+
+            if (productsWithCategory.Any())
+            {
+                TempData["message"] = "Nu puteti sterge aceasta categorie deoarece exista produse cu categoria respectiva.";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index", "Product");
+            }
+
+
             if (User.IsInRole("Admin"))
             {
                 db.Categories.Remove(category);
@@ -87,7 +97,7 @@ namespace Magazin_Online.Controllers
 
             if (category == null)
             {
-                TempData["message"] = "Categoria nu a fost găsită.";
+                TempData["message"] = "Categoria nu a fost gasita.";
                 TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Index", "Category");
             }
@@ -105,7 +115,7 @@ namespace Magazin_Online.Controllers
 
                 if (category == null)
                 {
-                    TempData["message"] = "Categoria nu a fost găsită.";
+                    TempData["message"] = "Categoria nu a fost gasita.";
                     TempData["messageType"] = "alert-danger";
                     return RedirectToAction("Index", "Category");
                 }
@@ -116,13 +126,13 @@ namespace Magazin_Online.Controllers
                 {
                     db.SaveChanges();
 
-                    TempData["message"] = "Categoria a fost modificată cu succes.";
+                    TempData["message"] = "Categoria a fost modificata cu succes.";
                     TempData["messageType"] = "alert-success";
                     return RedirectToAction("Index", "Category");
                 }
                 catch (Exception)
                 {
-                    TempData["message"] = "A apărut o eroare la salvarea modificărilor.";
+                    TempData["message"] = "A aparut o eroare la salvarea modificarilor.";
                     TempData["messageType"] = "alert-danger";
                     return View(model);
                 }

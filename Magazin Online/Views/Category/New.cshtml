@@ -13,13 +13,7 @@
 
                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-                @Html.Label("CategoryId", "ID categorie")
-                <br />
-                @Html.TextBox("CategoryId", null, new { @class = "form-control" })
-
-                @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
-                <br />
-
+              
                 <br />
 
                 @Html.Label("Name", "Nume categorie")

@@ -2,6 +2,15 @@
     ViewData["Title"] = "Category Index";
 }
 
+<div class="text-center">
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-info" href="/Category/New">Adauga categorie</a>
+    }
+
+</div>
+
 <h2>Categories</h2>
 
 <table class="table">
@@ -18,6 +27,12 @@
             <tr>
                 <td>@category.CategoryId</td>
                 <td>@category.Name</td>
+                <td>
+                <a class="btn btn-success" href="/Category/Edit/@category.CategoryId">Editeaza</a>
+                <form method="post" action="/Category/Delete/@category.CategoryId">
+                    <button class="btn btn-danger" type="submit">Sterge</button>
+                </form>
+                </td>
                 
             </tr>
         }
