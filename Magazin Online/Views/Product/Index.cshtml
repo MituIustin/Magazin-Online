@@ -36,13 +36,18 @@
         @ViewBag.Message
     </div>
 }
-@foreach (Magazin_Online.Models.Product product in ViewBag.Products)
-{
-    <div class="card">
-        @Html.Partial("ProductInfo", product )
-        <a class="btn btn-success" href="/Product/Show/@product.ProductId">Afisare articol</a>
-    </div>
-}
+
+<div class="row">
+    @foreach (Magazin_Online.Models.Product product in ViewBag.Products)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card" style="max-width: 300px">
+                @Html.Partial("ProductInfo", product)
+                <a class="btn btn-success" href="/Product/Show/@product.ProductId">Afisare articol</a>
+            </div>
+        </div>
+    }
+</div>
 
 
 

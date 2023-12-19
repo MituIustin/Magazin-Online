@@ -243,6 +243,9 @@ namespace Magazin_Online.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<float?>("rating")
+                        .HasColumnType("real");
+
                     b.HasKey("ProductId");
 
                     b.HasIndex("BasketId");

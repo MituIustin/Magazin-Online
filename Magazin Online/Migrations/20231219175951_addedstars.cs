@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Magazin_Online.Migrations
 {
-    public partial class rep : Migration
+    public partial class addedstars : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -226,6 +226,7 @@ namespace Magazin_Online.Migrations
                     Price = table.Column<int>(type: "int", nullable: false),
                     IsAccepted = table.Column<bool>(type: "bit", nullable: false),
                     Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    rating = table.Column<float>(type: "real", nullable: true),
                     BasketId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: true),
