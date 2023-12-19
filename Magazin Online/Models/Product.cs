@@ -13,6 +13,7 @@ namespace Magazin_Online.Models
         public int Price { get; set; }
         public bool IsAccepted { get; set; }
         public byte[]? Photo { get; set; }
+        public float? rating { get; set; }
 
         [ForeignKey("Basket")]
         public int? BasketId { get; set; }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 
 namespace Magazin_Online.Controllers
 {
@@ -36,9 +37,14 @@ namespace Magazin_Online.Controllers
         public IActionResult Index()
         {
 
-            int _perPage = 3;
+            int _perPage = 20;
 
             var products = db.Products.Include("User").Where(p=> p.IsAccepted==true);
+            foreach(var product in products)
+            {
+                var stars=GetStars(product.ProductId);
+                product.rating = stars;
+            }
             if (TempData.ContainsKey("message"))
             {
                 ViewBag.message =
@@ -75,6 +81,9 @@ namespace Magazin_Online.Controllers
 
 
             SetAccessRights();
+
+            var stars = GetStars(product.ProductId);
+            product.rating = stars;
 
             if (TempData.ContainsKey("message"))
             {
@@ -164,6 +173,7 @@ namespace Magazin_Online.Controllers
                 return RedirectToAction("Index");
             }
         }
+        
         private void SetAccessRights()
         {
             ViewBag.AfisareButoane = false;
@@ -196,6 +206,24 @@ namespace Magazin_Online.Controllers
                 }); 
             }
             return selectList;
+        }
+        [NonAction]
+        public float GetStars(int id)
+        {
+            float rating = 0;
+            float count = 0;
+            var reviews = db.Products.Find(id).Reviews;
+            if (reviews == null)
+            {
+                return 0;
+            }
+            foreach (var review in reviews)
+            {
+                rating = rating + review.Rating;
+                count++;
+            }
+            
+            return rating / count;
         }
 
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazin_Online.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231219141642_rep")]
-    partial class rep
+    [Migration("20231219175951_addedstars")]
+    partial class addedstars
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -244,6 +244,9 @@ namespace Magazin_Online.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<float?>("rating")
+                        .HasColumnType("real");
 
                     b.HasKey("ProductId");
 

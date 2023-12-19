@@ -3,16 +3,41 @@
 
 <div class="card-body">
 
-    <h3 class="card-title alert-success py-3 px-3 rounded-2">@Model.Title</h3>
+    <h5 class="card-title alert-success py-3 px-3 rounded-3">@Model.Title</h5>
 
     <div class="card-text">@Model.Description</div>
 
-    <img src="data:image/png;base64,@Convert.ToBase64String(Model.Photo)" alt="Product Photo" style="max-width: 200px; max-height: 200px;" />
+    <img src="data:image/png;base64,@Convert.ToBase64String(Model.Photo)" alt="Product Photo" style="max-width: 150px; max-height: 150px;" />
 
-    <div class="d-flex justify-content-between flex-row mt-5">
-
+    <div class="d-flex justify-content-between flex-row mt-3">
         <div><i class="bi bi-person"></i> @Model.Price Lei</div>
-
     </div>
+
+    <div class="rating">
+        @{
+
+       int numStars = (int)Model.rating;
+            
+
+        for (int i = 0; i < numStars; i++)
+        {
+                <span class="fa fa-star checked"></span>
+        }
+
+        
+        for (int i = numStars; i < 5; i++)
+        {
+                <span class="fa fa-star"></span>
+        }
+        }
+    </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
 
 </div>
