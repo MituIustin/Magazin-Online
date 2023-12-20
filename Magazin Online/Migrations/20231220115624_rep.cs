@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Magazin_Online.Migrations
 {
-    public partial class addedstars : Migration
+    public partial class rep : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
