@@ -161,14 +161,14 @@ namespace Magazin_Online.Controllers
             {
                 db.Products.Remove(product);
                 db.SaveChanges();
-                TempData["message"] = "Articolul a fost sters";
+                TempData["message"] = "Produsul a fost sters";
                 TempData["messageType"] = "alert-success";
                 return RedirectToAction("Index");
             }
 
             else
             {
-                TempData["message"] = "Nu aveti dreptul sa stergeti un articol care nu va apartine";
+                TempData["message"] = "Nu aveti dreptul sa stergeti un produs care nu va apartine";
                 TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Index");
             }
