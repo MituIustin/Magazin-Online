@@ -1,0 +1,35 @@
+﻿@model List<Product>
+
+<h1>Listă de Produse</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Titlu</th>
+            <th>Descriere</th>
+            <th>Pret</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Title</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td>
+                    <form method="post" action="@Url.Action("Delete", "BasketProduct", new { id_prod = product.ProductId })">
+                        @Html.Hidden("id_prod", product.ProductId)
+                        <button type="submit" class="btn btn-danger">Sterge din Cos</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model != null && Model.Count > 0)
+{
+    <a class="btn btn-success" href="@Url.Action("New", "Order")">Plaseaza comanda</a>
+}

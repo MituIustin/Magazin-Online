@@ -15,6 +15,15 @@ namespace Magazin_Online.Models
         public byte[]? Photo { get; set; }
         public float? rating { get; set; }
 
+        public Product()
+        {
+            BasketProducts = new List<BasketProduct>();
+        }
+
+        public virtual ICollection<BasketProduct>? BasketProducts { get; set; }
+
+       
+
         [ForeignKey("Basket")]
         public int? BasketId { get; set; }
         public virtual Basket? Basket { get; set; }
@@ -40,7 +49,6 @@ namespace Magazin_Online.Models
         public IEnumerable<SelectListItem>? Categ { get; set; }
         public virtual ICollection<Comment> ? Comments { get; set; }
         public virtual ICollection<Review> ? Reviews { get; set; }
-        public virtual ICollection<BasketProduct> ? BasketProducts { get; set; }
 
     }
 }

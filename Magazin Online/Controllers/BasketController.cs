@@ -2,43 +2,47 @@
 using Magazin_Online.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Magazin_Online.Controllers
 {
     public class BasketController : Controller
     {
-        
 
-            private readonly ApplicationDbContext db;
+        private readonly ApplicationDbContext db;
 
-            private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-            private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-            public BasketController(
-                ApplicationDbContext context,
-                UserManager<ApplicationUser> userManager,
-                RoleManager<IdentityRole> roleManager
-                )
-            {
-                db = context;
-
-                _userManager = userManager;
-
-                _roleManager = roleManager;
-            }
-        
-            public IActionResult Index()
+        public BasketController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager
+            )
         {
-            return View();
+            db = context;
+
+            _userManager = userManager;
+
+            _roleManager = roleManager;
+        }
+        public IActionResult Index()
+        {
+           
+            var productsInBasket = db.BasketProducts
+                .Include(bp => bp.Product)
+                .Where(bp => bp.Basket.UserId == _userManager.GetUserId(User))
+                .Select(bp => bp.Product)
+                .ToList();
+           
+            return View(productsInBasket);
         }
 
-        /*public void New()
-        {
-            Basket basket = new Basket();
-            db.Baskets.Add(basket);
-            db.SaveChanges();
 
-        }*/
+
+
+
     }
 }

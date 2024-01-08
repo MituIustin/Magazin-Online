@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazin_Online.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231220115624_rep")]
-    partial class rep
+    [Migration("20240108193916_rep2")]
+    partial class rep2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,8 +32,8 @@ namespace Magazin_Online.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("BasketId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("BasketId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -101,7 +101,10 @@ namespace Magazin_Online.Migrations
             modelBuilder.Entity("Magazin_Online.Models.Basket", b =>
                 {
                     b.Property<int>("BasketId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasketId"), 1L, 1);
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
@@ -110,6 +113,8 @@ namespace Magazin_Online.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BasketId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("UserId")
                         .IsUnique()
@@ -120,15 +125,23 @@ namespace Magazin_Online.Migrations
 
             modelBuilder.Entity("Magazin_Online.Models.BasketProduct", b =>
                 {
+                    b.Property<int>("BasketProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasketProductId"), 1L, 1);
+
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int?>("BasketId")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId", "BasketId");
+                    b.HasKey("BasketProductId", "ProductId", "BasketId");
 
                     b.HasIndex("BasketId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("BasketProducts");
                 });
@@ -197,13 +210,14 @@ namespace Magazin_Online.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ShippingPrice")
+                    b.Property<int?>("ShippingPrice")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("BasketId");
 
                     b.ToTable("Orders");
                 });
@@ -215,6 +229,9 @@ namespace Magazin_Online.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("BasketId")
                         .HasColumnType("int");
@@ -249,6 +266,8 @@ namespace Magazin_Online.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("BasketId");
 
@@ -450,10 +469,8 @@ namespace Magazin_Online.Migrations
             modelBuilder.Entity("Magazin_Online.Models.Basket", b =>
                 {
                     b.HasOne("Magazin_Online.Models.Order", "Order")
-                        .WithOne("Basket")
-                        .HasForeignKey("Magazin_Online.Models.Basket", "BasketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
                         .WithOne("Basket")
@@ -507,8 +524,21 @@ namespace Magazin_Online.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Magazin_Online.Models.Order", b =>
+                {
+                    b.HasOne("Magazin_Online.Models.Basket", "Basket")
+                        .WithMany()
+                        .HasForeignKey("BasketId");
+
+                    b.Navigation("Basket");
+                });
+
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>
                 {
+                    b.HasOne("Magazin_Online.Models.ApplicationUser", null)
+                        .WithMany("Baskets")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("Magazin_Online.Models.Basket", "Basket")
                         .WithMany()
                         .HasForeignKey("BasketId");
@@ -615,6 +645,8 @@ namespace Magazin_Online.Migrations
                 {
                     b.Navigation("Basket");
 
+                    b.Navigation("Baskets");
+
                     b.Navigation("Categories");
 
                     b.Navigation("Comments");
@@ -634,11 +666,6 @@ namespace Magazin_Online.Migrations
             modelBuilder.Entity("Magazin_Online.Models.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Magazin_Online.Models.Order", b =>
-                {
-                    b.Navigation("Basket");
                 });
 
             modelBuilder.Entity("Magazin_Online.Models.Product", b =>

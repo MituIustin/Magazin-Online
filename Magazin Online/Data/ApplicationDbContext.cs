@@ -10,7 +10,7 @@ namespace Magazin_Online.Data
             : base(options)
         {
         }
-
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -25,19 +25,19 @@ namespace Magazin_Online.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<BasketProduct>()
-                .HasKey(ac => new { ac.ProductId, ac.BasketId });
+                .HasKey(ab => new { ab.BasketProductId,ab.ProductId, ab.BasketId });
 
             // M PRODUCT se afla in M BASKET
 
             modelBuilder.Entity<BasketProduct>()
-                .HasOne(ac => ac.Product)
-                .WithMany(ac => ac.BasketProducts)
-                .HasForeignKey(ac => ac.ProductId);
-
+                .HasOne(ab => ab.Basket)
+                .WithMany(ab => ab.BasketProducts)
+                .HasForeignKey(ab => ab.BasketId);
             modelBuilder.Entity<BasketProduct>()
-                .HasOne(ac => ac.Basket)
-                .WithMany(ac => ac.BasketProducts)
-                .HasForeignKey(ac => ac.BasketId);
+                .HasOne(ab => ab.Product)
+                .WithMany(ab => ab.BasketProducts)
+                .HasForeignKey(ab => ab.ProductId);
+
 
             // 1 USER    detine    1 BASKET
 
@@ -53,12 +53,6 @@ namespace Magazin_Online.Data
                .WithOne(b => b.Request)
                .HasForeignKey<Request>(b => b.RequestId);
 
-            // 1 BASKET    detine    1 ORDER
-
-            modelBuilder.Entity<Basket>()
-               .HasOne<Order>(a => a.Order)
-               .WithOne(b => b.Basket)
-               .HasForeignKey<Basket>(b => b.BasketId);
 
             // 1 PRODUCT    detine    M REVIEW
 
