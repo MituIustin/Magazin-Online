@@ -26,14 +26,17 @@
 
         </div>
     }
-    <form method="post" asp-controller="Product">
-        <input type="hidden" name="ProductId" value="@Model.ProductId" />
+    @if (User.IsInRole("Admin") || User.IsInRole("User") || User.IsInRole("Contributor"))
+    {
+        <form method="post" action="/BasketProduct/Add/@Model.ProductId">
+            <input type="hidden" name="ProductId" value="@Model.ProductId" />
         <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
             <div>
-                <input type="submit" class="btn btn-success alert-success" value="+" />
+                <input type="submit" class="btn btn-success alert-success" value="Cumpara" />
             </div>
         </div>
-    </form>
+        </form>
+    }
 </div>
 
 

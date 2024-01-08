@@ -8,12 +8,14 @@ namespace Magazin_Online.Models
     {
         [Key]
         public int OrderId { get; set; }
-        public string Location {  get; set; }
-        public int ShippingPrice { get; set; }
+        public string ? Location {  get; set; }
+        public int? ShippingPrice { get; set; }
 
         [ForeignKey("Basket")]
         public int? BasketId { get; set; }
         public virtual Basket ? Basket { get; set; }
+        [NotMapped]
+        public virtual ICollection<int> ProductIds { get; set; } = new List<int>();
 
     }
 }
