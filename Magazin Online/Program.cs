@@ -82,6 +82,27 @@ app.MapControllerRoute(
     defaults: new { controller = "Category", action = "Edit" });
 
 
+app.MapControllerRoute(
+    name: "EditProduct",
+    pattern: "Product/Edit/{id}",
+    defaults: new { controller = "Product", action = "Edit" });
+
+app.MapControllerRoute(
+    name: "NewBasket",
+    pattern: "Basket/New/",
+    defaults: new { controller = "Basket", action = "New" });
+
+
+app.MapControllerRoute(
+    name: "SortC",
+    pattern: "Product/pretcresc/{searched?}",
+    defaults: new { controller = "Product", action = "pretcresc" });
+
+app.MapControllerRoute(
+    name: "SortD",
+    pattern: "Product/pretdescresc/{searched?}",
+    defaults: new { controller = "Product", action = "pretdescresc" });
+
 
 
 app.MapRazorPages();

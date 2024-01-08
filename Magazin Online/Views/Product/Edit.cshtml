@@ -1,0 +1,57 @@
+﻿@model Magazin_Online.Models.Product
+
+<h2 class="text-center mt-5">Editare produs</h2>
+<br />
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            @using (Html.BeginForm(actionName: "Edit", controllerName: "Product",
+            method: FormMethod.Post,
+            routeValues: new { id = Model.ProductId }))
+            {
+
+
+                @Html.Label("Title", "Nume produs")
+                <br />
+                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+                <br />
+
+                <br />
+
+                @Html.Label("Description", "Descriere produs")
+                <br />
+                @Html.Editor("Description", new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })
+                <br />
+
+                <br />
+
+                @Html.Label("Price", "Pret produs")
+                <br />
+                @Html.Editor("Price", new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(m => m.Price, null, new { @class = "text-danger" })
+                <br />
+
+                <br />
+
+
+                <label>Selectati categoria</label>
+
+                @Html.DropDownListFor(m => m.CategoryId,
+                new SelectList(Model.Categ, "Value", "Text"),
+                "Selectati categoria", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
+                <br />
+
+                <br />
+
+                <button class="btn btn-sm btn-success" type="submit">Modifica produs</button>
+
+            }
+        </div>
+    </div>
+</div>
