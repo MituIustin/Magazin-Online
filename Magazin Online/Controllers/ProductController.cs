@@ -1,11 +1,14 @@
 ﻿using System.Data;
 using System.IO;
+using System.Linq.Expressions;
 using Magazin_Online.Data;
 using Magazin_Online.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
 
@@ -34,17 +37,42 @@ namespace Magazin_Online.Controllers
         }
 
         
-        public IActionResult Index()
+        
+
+
+
+        public IActionResult Index(string? searched)
         {
 
-            int _perPage = 20;
+            ViewBag.searched = searched;
+            var tosort = Convert.ToString(HttpContext.Request.Query["sort"]);
 
-            var products = db.Products.Include("User").Where(p=> p.IsAccepted==true);
-            foreach(var product in products)
+            ViewBag.sort = tosort;
+
+
+            var products = db.Products.Include("User").Where(p => p.IsAccepted == true);
+            if (searched != null)
             {
-                var stars=GetStars(product.ProductId);
+                products = products.Where(p => p.Title.Contains(searched));
+            }
+            
+            foreach (var product in products)
+            {
+                var stars = GetStars(product.ProductId);
                 product.rating = stars;
             }
+            int _perPage = 3;
+            
+            if(ViewBag.sort=="pcresc")
+            {
+                products = products.OrderBy(p => p.Price);
+            }
+            else if (ViewBag.sort == "pdesc")
+            {
+                products = products.OrderByDescending(p => p.Price);
+            }
+            
+
             if (TempData.ContainsKey("message"))
             {
                 ViewBag.message =
@@ -70,6 +98,18 @@ namespace Magazin_Online.Controllers
 
             return View();
         }
+
+        public IActionResult pretcresc(string? searched)
+        {
+            TempData["sort"] = "pcresc";
+            return RedirectToAction("Index", new {page=1, searched=searched, sort="pcresc"});
+        }
+        public IActionResult pretdescresc(string? searched)
+        {
+            TempData["sort"] = "pdesc";
+            return RedirectToAction("Index", new {page=1, searched = searched, sort = "pdesc" });
+        }
+
         public IActionResult Show(int id)
         {
             Product product = db.Products.Include("Category")
@@ -173,7 +213,65 @@ namespace Magazin_Online.Controllers
                 return RedirectToAction("Index");
             }
         }
-        
+
+        [Authorize(Roles = "Contributor,Admin")]
+        public IActionResult Edit(int id)
+        {
+
+            Product product = db.Products.Include("Category")
+                                        .Where(prod => prod.ProductId == id)
+                                        .First();
+
+            product.Categ = GetAllCategories();
+
+            if (product.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
+            {
+                return View(product);
+            }
+
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui produs care nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Contributor,Admin")]
+        public IActionResult Edit(int id, Product requestProduct)
+        {
+            Product product = db.Products.Find(id);
+
+
+            if (ModelState.IsValid)
+            {
+                if (product.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
+                {
+                    product.Title = requestProduct.Title;
+                    product.Description = requestProduct.Description;
+                    product.CategoryId = requestProduct.CategoryId;
+                    product.Price=requestProduct.Price;
+                    TempData["message"] = "Produsul a fost modificat";
+                    TempData["messageType"] = "alert-success";
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui produs care nu va apartine";
+                    TempData["messageType"] = "alert-danger";
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                requestProduct.Categ = GetAllCategories();
+                return View(requestProduct);
+            }
+        }
+
         private void SetAccessRights()
         {
             ViewBag.AfisareButoane = false;

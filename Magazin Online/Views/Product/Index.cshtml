@@ -24,12 +24,18 @@
     
 </div>
 *@
-
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
 <br />
 
 <h2 class="text-center">Afisare produse</h2>
 
 <br />
+
 
 @if (TempData["message"] != null)
 {
@@ -51,14 +57,22 @@
 </div>
 
 
-
-
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sorteaza
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="/Product/pretcresc/@ViewBag.searched">Crescator Dupa Pret</a>
+        <a class="dropdown-item" href="/Product/pretdescresc/@ViewBag.searched">Descrescator Dupa Pret</a>
+        <a class="dropdown-item" >Dupa Nume</a>
+    </div>
+</div>
 <div>
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link"
-                   href="/Product/Index?page=1" aria-label="Previous">
+                   href="/Product/Index?page=1&?sort=@ViewBag.sort&searched=(@ViewBag.searched)" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -66,12 +80,12 @@
             {
                 <li class="page-item">
                     <a class="page-link"
-                   href="/Product/Index?page=@i">@(i)</a>
+                   href="/Product/Index?page=@i&?sort=@ViewBag.sort&searched=@(ViewBag.searched)">@(i)</a>
                 </li>
             }
             <li class="page-item">
                 <a class="page-link"
-                   href="/Product/Index?page=@(ViewBag.lastPage)" aria-
+                   href="/Product/Index?page=@(ViewBag.lastPage)&?sort=@ViewBag.sort&searched=(@ViewBag.searched)" aria-
                    label="Next">
 
                     <span aria-hidden="true">&raquo;</span>
@@ -80,3 +94,7 @@
         </ul>
     </nav>
 </div>
+
+
+
+

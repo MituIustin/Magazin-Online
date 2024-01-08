@@ -87,9 +87,31 @@ app.MapControllerRoute(
     defaults: new { controller = "BasketProduct", action = "Add" });
 
 app.MapControllerRoute(
+    name: "EditProduct",
+    pattern: "Product/Edit/{id}",
+    defaults: new { controller = "Product", action = "Edit" });
+
+app.MapControllerRoute(
+    name: "NewBasket",
+    pattern: "Basket/New/",
+    defaults: new { controller = "Basket", action = "New" });
+
+
+app.MapControllerRoute(
+    name: "SortC",
+    pattern: "Product/pretcresc/{searched?}",
+    defaults: new { controller = "Product", action = "pretcresc" });
+
+app.MapControllerRoute(
+    name: "SortD",
+    pattern: "Product/pretdescresc/{searched?}",
+    defaults: new { controller = "Product", action = "pretdescresc" });
+
+
     name: "DeleteFromBasket",
     pattern: "BasketProduct/Delete/{id_prod}",
     defaults: new { controller = "BasketProduct", action = "Delete" });
+
 
 app.MapControllerRoute(
     name: "PlaceOrder",
