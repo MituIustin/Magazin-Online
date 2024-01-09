@@ -107,7 +107,7 @@ app.MapControllerRoute(
     pattern: "Product/pretdescresc/{searched?}",
     defaults: new { controller = "Product", action = "pretdescresc" });
 
-
+app.MapControllerRoute(
     name: "DeleteFromBasket",
     pattern: "BasketProduct/Delete/{id_prod}",
     defaults: new { controller = "BasketProduct", action = "Delete" });
@@ -118,6 +118,15 @@ app.MapControllerRoute(
     pattern: "Order/New",
     defaults: new { controller = "Order", action = "New" });
 
+app.MapControllerRoute(
+    name: "DeleteComment",
+    pattern: "Comment/Delete/{id}",
+    defaults: new { controller = "Comment", action = "Delete" });
+
+app.MapControllerRoute(
+    name: "EditComment",
+    pattern: "Comment/Edit/{id}",
+    defaults: new { controller = "Comment", action = "Edit" });
 app.MapRazorPages();
 
 app.Run();

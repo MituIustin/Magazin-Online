@@ -1,0 +1,26 @@
+﻿@model Magazin_Online.Models.Comment
+
+<h2>Adauga comentariu</h2>
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<form asp-action="New" method="post">
+    <input type="hidden" asp-for="ProductId" value="@ViewBag.ProductId" />
+
+    <div class="form-group">
+        <label asp-for="Content" class="control-label">Comentariu</label>
+        <textarea asp-for="Content" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Adauga comentariu</button>
+    </div>
+</form>
+
+<a asp-action="Index" class="btn btn-secondary">Inapoi la produs</a>
