@@ -12,11 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazin_Online.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:Magazin Online/Migrations/20240109144424_reparation.Designer.cs
-    [Migration("20240109144424_reparation")]
-========
-    [Migration("20240108213540_reparation")]
->>>>>>>> 8887a90aefe1bf6730edb5f9fb00dc0730c87a59:Magazin Online/Migrations/20240108213540_reparation.Designer.cs
+    [Migration("20240109152455_reparation")]
     partial class reparation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
