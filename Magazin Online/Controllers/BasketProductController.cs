@@ -1,5 +1,6 @@
 ﻿using Magazin_Online.Data;
 using Magazin_Online.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,11 +31,14 @@ namespace Magazin_Online.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Contributor,Admin,User")]
         public IActionResult Add(int id_prod)
+
         {
             var id_user = _userManager.GetUserId(User);
 
             ApplicationUser currentUser = db.Users.Find(id_user);
+
 
             if (currentUser.BasketId > 0)
             {

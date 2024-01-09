@@ -118,6 +118,15 @@ app.MapControllerRoute(
     pattern: "Order/New",
     defaults: new { controller = "Order", action = "New" });
 
+app.MapControllerRoute(
+    name: "DeleteComment",
+    pattern: "Comment/Delete/{id}",
+    defaults: new { controller = "Comment", action = "Delete" });
+
+app.MapControllerRoute(
+    name: "EditComment",
+    pattern: "Comment/Edit/{id}",
+    defaults: new { controller = "Comment", action = "Edit" });
 app.MapRazorPages();
 
 app.Run();

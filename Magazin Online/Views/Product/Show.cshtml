@@ -6,7 +6,7 @@
         @ViewBag.Message
     </div>
 }
-<br/>
+<br />
 
 <div class="card">
 
@@ -15,31 +15,52 @@
     @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
     {
         <div class="d-flex flex-row justify-content-between p-3 border-1 border-top">
-
             <a class="btn btn-success" href="/Product/Edit/@Model.ProductId">Editeaza produs</a>
-
             <form method="post" action="/Product/Delete/@Model.ProductId">
-
                 <button class="btn btn-danger" type="submit">Sterge articol</button>
-
             </form>
-
         </div>
     }
-    @if (User.IsInRole("Admin") || User.IsInRole("User") || User.IsInRole("Contributor"))
-    {
-        <form method="post" action="/BasketProduct/Add/@Model.ProductId">
-            <input type="hidden" name="ProductId" value="@Model.ProductId" />
+
+    <form method="post" action="/BasketProduct/Add/@Model.ProductId">
+        <input type="hidden" name="ProductId" value="@Model.ProductId" />
         <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
             <div>
                 <input type="submit" class="btn btn-success alert-success" value="Cumpara" />
             </div>
         </div>
-        </form>
-    }
+    </form>
+
+    <div class="p-3 border-1 border-top">
+        <h3>Comentarii:</h3>
+        @if (Model.Comments != null && Model.Comments.Any())
+        {
+            foreach (var comment in Model.Comments)
+            {
+                <div class="comment">
+                    <p>@comment.Content</p>
+                    <p>By: @comment.User.UserName</p>
+
+                    @if (User.IsInRole("Admin") || User.Identity.Name == comment.User.UserName)
+                    {
+                        <form method="post" asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.CommentId">
+                            <button type="submit" class="btn btn-danger">Stergere</button>
+                        </form>
+
+                        <a class="btn btn-danger" asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.CommentId">Editare</a>
+                    }
+                    <hr>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Nu exista comentarii pentru acest produs.</p>
+        }
+    </div>
+
+    <div class="p-3 border-1 border-top">
+        <a class="btn btn-primary" href="/Comment/New?prod_id=@Model.ProductId">Adauga comentariu</a>
+    </div>
+
 </div>
-
-
-
-
-
