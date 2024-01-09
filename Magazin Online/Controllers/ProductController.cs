@@ -41,19 +41,19 @@ namespace Magazin_Online.Controllers
 
 
 
-        public IActionResult Index(string? searched)
+        public IActionResult Index()
         {
 
-            ViewBag.searched = searched;
-            var tosort = Convert.ToString(HttpContext.Request.Query["sort"]);
+           
+            ViewBag.sort = Convert.ToString(HttpContext.Request.Query["sort"]);
 
-            ViewBag.sort = tosort;
-
+            var searched = Convert.ToString(HttpContext.Request.Query["searched"]);
 
             var products = db.Products.Include("User").Where(p => p.IsAccepted == true);
             if (searched != null)
             {
                 products = products.Where(p => p.Title.Contains(searched));
+                ViewBag.searched = searched;
             }
             
             foreach (var product in products)
@@ -101,13 +101,16 @@ namespace Magazin_Online.Controllers
 
         public IActionResult pretcresc(string? searched)
         {
-            TempData["sort"] = "pcresc";
-            return RedirectToAction("Index", new {page=1, searched=searched, sort="pcresc"});
+            var test = searched;
+            if (searched == null)
+            {
+                test = "";
+            }
+            return RedirectToAction("Index", new {page=1,  sort="pcresc",searched = test });
         }
         public IActionResult pretdescresc(string? searched)
         {
-            TempData["sort"] = "pdesc";
-            return RedirectToAction("Index", new {page=1, searched = searched, sort = "pdesc" });
+            return RedirectToAction("Index", new {page=1, sort = "pdesc", searched = searched });
         }
 
         public IActionResult Show(int id)

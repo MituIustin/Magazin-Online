@@ -18,7 +18,9 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <nav class="navbar navbar-light bg-light justify-content-between">
-                    <form class="form-inline" method="post" action="/Product/Index/">
+                    <form class="form-inline" method="get" action="/Product">
+                        <input type="hidden" name="page" value="1">
+                        <input type="hidden" name="sort" value="norm">
                         <input class="form-control mr-sm-2" type="search" name="searched" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>

@@ -72,7 +72,7 @@
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link"
-                   href="/Product/Index?page=1&?sort=@ViewBag.sort&searched=(@ViewBag.searched)" aria-label="Previous">
+                   href="/Product?page=1&sort=@ViewBag.sort&searched=@ViewBag.searched" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -80,12 +80,12 @@
             {
                 <li class="page-item">
                     <a class="page-link"
-                   href="/Product/Index?page=@i&?sort=@ViewBag.sort&searched=@(ViewBag.searched)">@(i)</a>
+                   href="/Product?page=@(i)&sort=@ViewBag.sort&searched=@ViewBag.searched">@(i)</a>
                 </li>
             }
             <li class="page-item">
                 <a class="page-link"
-                   href="/Product/Index?page=@(ViewBag.lastPage)&?sort=@ViewBag.sort&searched=(@ViewBag.searched)" aria-
+                   href="/Product?page=@(ViewBag.lastPage)&sort=@ViewBag.sort&searched=@ViewBag.searched" aria-
                    label="Next">
 
                     <span aria-hidden="true">&raquo;</span>

@@ -15,7 +15,8 @@ namespace Magazin_Online.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Product");
+            string x = null;
+            return RedirectToAction("Index", "Product", new { page = 1, sort = "norm", searched=x });
         }
 
         public IActionResult Privacy()
