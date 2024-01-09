@@ -107,7 +107,7 @@ app.MapControllerRoute(
     pattern: "Product/pretdescresc/{searched?}",
     defaults: new { controller = "Product", action = "pretdescresc" });
 
-
+app.MapControllerRoute(
     name: "DeleteFromBasket",
     pattern: "BasketProduct/Delete/{id_prod}",
     defaults: new { controller = "BasketProduct", action = "Delete" });
