@@ -21,7 +21,13 @@
             </form>
         </div>
     }
+    @{
+        var reviewModel = new Magazin_Online.Models.Review();
+        reviewModel.ProductId = Model.ProductId;
+    }
 
+    @Html.Partial("ReviewNew", reviewModel)
+      
     <form method="post" action="/BasketProduct/Add/@Model.ProductId">
         <input type="hidden" name="ProductId" value="@Model.ProductId" />
         <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
@@ -62,5 +68,7 @@
     <div class="p-3 border-1 border-top">
         <a class="btn btn-primary" href="/Comment/New?prod_id=@Model.ProductId">Adauga comentariu</a>
     </div>
-
+    <div class="p-3 border-1 border-top">
+        <a class="btn btn-primary" href="/Review/New?prod_id=@Model.ProductId">Adauga review</a>
+    </div>
 </div>

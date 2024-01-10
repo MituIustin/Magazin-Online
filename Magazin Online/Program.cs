@@ -1,3 +1,4 @@
+using System.Globalization;
 using Magazin_Online.Data;
 using Magazin_Online.Models;
 using Microsoft.AspNetCore.Identity;
@@ -128,5 +129,8 @@ app.MapControllerRoute(
     pattern: "Comment/Edit/{id}",
     defaults: new { controller = "Comment", action = "Edit" });
 app.MapRazorPages();
+
+
+
 
 app.Run();
