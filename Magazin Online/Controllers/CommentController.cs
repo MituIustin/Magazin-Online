@@ -80,7 +80,7 @@ namespace Magazin_Online.Controllers
                 TempData["message"] = "Nu s-a putut sterge comentariul.";
             }
 
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("Index", "Product", new { page = 1, sort = "norm", searched = (string)null });
         }
 
         public IActionResult Edit(int id)
@@ -91,7 +91,7 @@ namespace Magazin_Online.Controllers
             {
                 TempData["message"] = "Comentariul nu a fost gasit.";
                 TempData["messageType"] = "alert-danger";
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index", "Product", new { page = 1, sort = "norm", searched = (string)null });
             }
 
             return View(comment);
@@ -108,7 +108,7 @@ namespace Magazin_Online.Controllers
                 {
                     TempData["message"] = "Comentariul nu a fost gasit.";
                     TempData["messageType"] = "alert-danger";
-                    return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index", "Product", new { page = 1, sort = "norm", searched = (string)null });
                 }
 
                 comment.Content = model.Content;
@@ -119,7 +119,7 @@ namespace Magazin_Online.Controllers
 
                     TempData["message"] = "Comentariul a fost modificat cu succes.";
                     TempData["messageType"] = "alert-success";
-                    return RedirectToAction("Index", "Product");
+                    return RedirectToAction("Index", "Product", new { page = 1, sort = "norm", searched = (string)null });
                 }
                 catch (Exception)
                 {

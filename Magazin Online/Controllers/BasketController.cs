@@ -40,9 +40,5 @@ namespace Magazin_Online.Controllers
             return View(productsInBasket);
         }
 
-
-
-
-
     }
 }

@@ -36,11 +36,6 @@ namespace Magazin_Online.Controllers
             _roleManager = roleManager;
         }
 
-        
-        
-
-
-
         public IActionResult Index()
         {
 
