@@ -308,7 +308,26 @@ namespace Magazin_Online.Controllers
         {
             float rating = 0;
             float count = 0;
-            var reviews = db.Products.Find(id).Reviews;
+            var reviews = db.Reviews.Where(r=>r.ProductId==id);
+
+            foreach (var review in reviews)
+            {
+                rating = review.Rating + rating;
+                count++;
+            }
+
+            if (count == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt32(rating / count);
+            }
+
+
+
+            /*
             if (reviews == null)
             {
                 return 0;
@@ -320,8 +339,9 @@ namespace Magazin_Online.Controllers
             }
             
             return rating / count;
+            */
+            return 0;
+            
         }
-
-
+        }
     }
-}

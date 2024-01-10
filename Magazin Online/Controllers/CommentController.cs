@@ -34,13 +34,14 @@ namespace Magazin_Online.Controllers
         {
             // Pass the productId to the view
             ViewBag.ProductId = prod_id;
-
+            TempData["id"]= prod_id;
             return View();
         }
         [HttpPost]
         [HttpPost]
         public IActionResult New(Comment comment)
         {
+            var prodid = TempData["id"];
             try
             {
                 var currentUser = _userManager.GetUserAsync(User).Result;
@@ -50,14 +51,14 @@ namespace Magazin_Online.Controllers
 
                 db.Comments.Add(comment);
                 db.SaveChanges();
-
+                
                 TempData["message"] = "Comentariul a fost adaugat cu succes.";
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Show", "Product",new {id=prodid });
             }
             catch (Exception)
             {
                 TempData["message"] = "A aparut o eroare la adaugarea comentariului.";
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Show", "Product", new { id = prodid });
             }
         }
 
