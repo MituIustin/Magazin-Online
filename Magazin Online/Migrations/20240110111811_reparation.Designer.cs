@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazin_Online.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240110105939_rep4")]
-    partial class rep4
+    [Migration("20240110111811_reparation")]
+    partial class reparation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
