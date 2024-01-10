@@ -12,6 +12,11 @@
 
     @Html.Partial("ProductInfo", Model)
 
+    <div class="p-3 border-1 border-top">
+        <small class="text-muted">Categorie:</small>
+        <p class="text-secondary">@Model.Category?.Name</p>
+    </div>
+
     @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
     {
         <div class="d-flex flex-row justify-content-between p-3 border-1 border-top">

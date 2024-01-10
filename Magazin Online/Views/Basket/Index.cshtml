@@ -1,6 +1,6 @@
 ﻿@model List<Product>
 
-<h1>Listă de Produse</h1>
+<h1>Lista de Produse</h1>
 
 <table class="table">
     <thead>
@@ -31,5 +31,14 @@
 
 @if (Model != null && Model.Count > 0)
 {
-    <a class="btn btn-success" href="@Url.Action("New", "Order")">Plaseaza comanda</a>
+    <form action="@Url.Action("New", "Order")" method="post">
+        <div>
+            <h4>Adresa de livrare:</h4>
+            <input type="text" id="AdresaLivrare" name="AdresaLivrare" class="form-control" placeholder="Introduceți adresa de livrare">
+        </div>
+
+        <h4>Pret total: @Model.Sum(p => p.Price) RON</h4>
+
+        <button type="submit" class="btn btn-success">Plaseaza comanda</button>
+    </form>
 }

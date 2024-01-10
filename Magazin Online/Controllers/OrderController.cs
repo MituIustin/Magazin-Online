@@ -27,7 +27,7 @@ namespace Magazin_Online.Controllers
 
             _roleManager = roleManager;
         }
-        public IActionResult New()
+        public IActionResult New(string AdresaLivrare)
         {
             var id_user = _userManager.GetUserId(User);
 
@@ -38,33 +38,33 @@ namespace Magazin_Online.Controllers
 
             var basketProducts = db.BasketProducts
                 .Where(bp => bp.BasketId == id_basket)
+                .Include(bp => bp.Product)
                 .ToList();
 
-            // Creați un nou obiect Order
             Order newOrder = new Order
             {
-                // Alte proprietăți ale obiectului Order pot fi completate aici, în funcție de nevoi
+                ProductIds = "",
+                Products = new List<Product>()  
             };
 
-            // Adăugați fiecare produs din coș la lista de ID-uri de produse a comenzii
             foreach (var basketProduct in basketProducts)
             {
-                newOrder.ProductIds.Add(basketProduct.ProductId.GetValueOrDefault());
+                newOrder.ProductIds += basketProduct.ProductId.GetValueOrDefault();
+                newOrder.ProductIds += ",";
+                newOrder.Products.Add(basketProduct.Product);
             }
 
-            // Adăugați comanda în contextul bazei de date
+            var totalOrderPrice = basketProducts.Sum(bp => bp.Product.Price);
+
+            newOrder.ShippingPrice = totalOrderPrice;
+            newOrder.Location = AdresaLivrare;
+
             db.Orders.Add(newOrder);
-
-            // Ștergeți produsele din coș (opțional, în funcție de cerințe)
             db.BasketProducts.RemoveRange(basketProducts);
-
-            // Salvați modificările în baza de date
             db.SaveChanges();
 
-            // Puteți redirecționa utilizatorul către o altă pagină sau puteți returna o vedere corespunzătoare
             return View();
         }
-
 
 
 

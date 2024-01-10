@@ -68,7 +68,7 @@ namespace Magazin_Online.Controllers
             {
                 TempData["message"] = "Nu puteti sterge aceasta categorie deoarece exista produse cu categoria respectiva.";
                 TempData["messageType"] = "alert-danger";
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index", "Product", new { page = 1, sort = "norm", searched = (string)null });
             }
 
 
@@ -80,7 +80,6 @@ namespace Magazin_Online.Controllers
                 TempData["messageType"] = "alert-success";
                 return RedirectToAction("Index","Category");
             }
-
             else
             {
                 TempData["message"] = "Nu aveti dreptul sa stergeti aceasta categorie.";
@@ -92,7 +91,6 @@ namespace Magazin_Online.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
-            // Găsește categoria după id
             Category category = db.Categories.Find(id);
 
             if (category == null)

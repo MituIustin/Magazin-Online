@@ -71,7 +71,10 @@ namespace Magazin_Online.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Product");
+            TempData["message"] = "Produs adaugat.";
+            TempData["messageType"] = "alert-success";
+            return RedirectToAction("Index", "Product", new { page = 1, sort = "norm", searched = (string)null });
+
         }
 
         public IActionResult Delete(int id_prod)
@@ -84,7 +87,7 @@ namespace Magazin_Online.Controllers
             db.BasketProducts.Remove(basketProduct);
             db.SaveChanges();
 
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("Index", "Basket");
         }
 
     }
