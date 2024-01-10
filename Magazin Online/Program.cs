@@ -115,7 +115,7 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "PlaceOrder",
-    pattern: "Order/New",
+    pattern: "Order/New/{AdresaLivrare}",
     defaults: new { controller = "Order", action = "New" });
 
 app.MapControllerRoute(

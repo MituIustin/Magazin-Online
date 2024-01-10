@@ -14,8 +14,16 @@ namespace Magazin_Online.Models
         [ForeignKey("Basket")]
         public int? BasketId { get; set; }
         public virtual Basket ? Basket { get; set; }
+
+
         [NotMapped]
-        public virtual ICollection<int> ProductIds { get; set; } = new List<int>();
+        private ICollection<int>? _productIds { get; set; } = new List<int>();
+
+        [Column("ProductIds")]
+        public string? ProductIds { get; set;}
+
+        public virtual ICollection<Product>? Products { get; set; } = new List<Product>();
+
 
     }
 }

@@ -27,7 +27,7 @@ namespace Magazin_Online.Controllers
 
             _roleManager = roleManager;
         }
-        public IActionResult New()
+        public IActionResult New(string AdresaLivrare)
         {
             var id_user = _userManager.GetUserId(User);
 
@@ -38,14 +38,26 @@ namespace Magazin_Online.Controllers
 
             var basketProducts = db.BasketProducts
                 .Where(bp => bp.BasketId == id_basket)
+                .Include(bp => bp.Product)
                 .ToList();
 
-            Order newOrder = new Order();
-            
+            Order newOrder = new Order
+            {
+                ProductIds = "",
+                Products = new List<Product>()  
+            };
+
             foreach (var basketProduct in basketProducts)
             {
-                newOrder.ProductIds.Add(basketProduct.ProductId.GetValueOrDefault());
+                newOrder.ProductIds += basketProduct.ProductId.GetValueOrDefault();
+                newOrder.ProductIds += ",";
+                newOrder.Products.Add(basketProduct.Product);
             }
+
+            var totalOrderPrice = basketProducts.Sum(bp => bp.Product.Price);
+
+            newOrder.ShippingPrice = totalOrderPrice;
+            newOrder.Location = AdresaLivrare;
 
             db.Orders.Add(newOrder);
             db.BasketProducts.RemoveRange(basketProducts);
@@ -53,7 +65,6 @@ namespace Magazin_Online.Controllers
 
             return View();
         }
-
 
 
 

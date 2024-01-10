@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazin_Online.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240109152455_reparation")]
-    partial class reparation
+    [Migration("20240110105939_rep4")]
+    partial class rep4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -212,6 +212,10 @@ namespace Magazin_Online.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProductIds")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ProductIds");
+
                     b.Property<int?>("ShippingPrice")
                         .HasColumnType("int");
 
@@ -246,6 +250,9 @@ namespace Magazin_Online.Migrations
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");
 
@@ -272,6 +279,8 @@ namespace Magazin_Online.Migrations
                     b.HasIndex("BasketId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("UserId");
 
@@ -547,6 +556,10 @@ namespace Magazin_Online.Migrations
                         .WithMany("Products")
                         .HasForeignKey("CategoryId");
 
+                    b.HasOne("Magazin_Online.Models.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId");
+
                     b.HasOne("Magazin_Online.Models.ApplicationUser", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId");
@@ -664,6 +677,11 @@ namespace Magazin_Online.Migrations
                 });
 
             modelBuilder.Entity("Magazin_Online.Models.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Magazin_Online.Models.Order", b =>
                 {
                     b.Navigation("Products");
                 });
