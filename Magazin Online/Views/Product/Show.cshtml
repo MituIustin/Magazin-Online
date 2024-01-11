@@ -16,6 +16,14 @@
         <small class="text-muted">Categorie:</small>
         <p class="text-secondary">@Model.Category?.Name</p>
     </div>
+    <form method="post" action="/BasketProduct/Add/@Model.ProductId">
+        <input type="hidden" name="ProductId" value="@Model.ProductId" />
+        <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
+            <div>
+                <input type="submit" class="btn btn-success alert-success" value="Cumpara" />
+            </div>
+        </div>
+    </form>
 
     @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
     {
@@ -31,16 +39,14 @@
         reviewModel.ProductId = Model.ProductId;
     }
 
-    @Html.Partial("ReviewNew", reviewModel)
-      
-    <form method="post" action="/BasketProduct/Add/@Model.ProductId">
-        <input type="hidden" name="ProductId" value="@Model.ProductId" />
-        <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
-            <div>
-                <input type="submit" class="btn btn-success alert-success" value="Cumpara" />
-            </div>
-        </div>
-    </form>
+
+    @if(ViewBag.currentid!=null){
+        @Html.Partial("ReviewNew", reviewModel)
+    }
+    
+    
+
+    @Html.Partial("ProductReview",Model)
 
     <div class="p-3 border-1 border-top">
         <h3>Comentarii:</h3>
@@ -69,11 +75,11 @@
             <p>Nu exista comentarii pentru acest produs.</p>
         }
     </div>
+    @if(ViewBag.currentid!=null){
+        <div class="p-3 border-1 border-top">
+            <a class="btn btn-primary" href="/Comment/New?prod_id=@Model.ProductId">Adauga comentariu</a>
+        </div>
 
-    <div class="p-3 border-1 border-top">
-        <a class="btn btn-primary" href="/Comment/New?prod_id=@Model.ProductId">Adauga comentariu</a>
-    </div>
-    <div class="p-3 border-1 border-top">
-        <a class="btn btn-primary" href="/Review/New?prod_id=@Model.ProductId">Adauga review</a>
-    </div>
+    }
+    
 </div>
