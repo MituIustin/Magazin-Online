@@ -41,7 +41,7 @@
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link"
-                   href="/Product/Show/@Model.ProductId?page=1" aria-label="Previous">
+                   href="/Product/Show/@Model.ProductId?section=review&page=1" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -49,12 +49,12 @@
             {
                 <li class="page-item">
                     <a class="page-link"
-                   href="/Product/Show/@Model.ProductId?page=@(i)">@(i)</a>
+                   href="/Product/Show/@Model.ProductId?section=review&page=@(i)">@(i)</a>
                 </li>
             }
             <li class="page-item">
                 <a class="page-link"
-                   href="/Product/Show/@Model.ProductId?page=@(ViewBag.lastPage)" aria-
+                   href="/Product/Show/@Model.ProductId?section=review&page=@(ViewBag.lastPage)" aria-
                    label="Next">
 
                     <span aria-hidden="true">&raquo;</span>

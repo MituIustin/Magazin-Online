@@ -52,11 +52,7 @@ namespace Magazin_Online.Controllers
                 ViewBag.searched = searched;
             }
             
-            foreach (var product in products)
-            {
-                var stars = GetStars(product.ProductId);
-                product.rating = stars;
-            }
+            
             int _perPage = 3;
             
             if(ViewBag.sort=="pcresc")
@@ -67,7 +63,14 @@ namespace Magazin_Online.Controllers
             {
                 products = products.OrderByDescending(p => p.Price);
             }
-            
+            else if(ViewBag.sort == "rcresc")
+            {
+                products = products.OrderBy(p => p.rating);
+            }
+            else if (ViewBag.sort == "rdesc")
+            {
+                products = products.OrderByDescending(p => p.rating);
+            }
 
             if (TempData.ContainsKey("message"))
             {
@@ -123,6 +126,8 @@ namespace Magazin_Online.Controllers
 
             SetAccessRights();
 
+            ViewBag.section= Convert.ToString(HttpContext.Request.Query["section"]);
+
             var reviews=product.Reviews;
 
             int _perPage = 3;
@@ -168,9 +173,7 @@ namespace Magazin_Online.Controllers
             ViewBag.Reviews = paginatedReviews;
 
 
-            var stars = GetStars(product.ProductId);
-            product.rating = stars;
-
+            
             if (TempData.ContainsKey("message"))
             {
                 ViewBag.Message = TempData["message"];
@@ -351,45 +354,6 @@ namespace Magazin_Online.Controllers
             }
             return selectList;
         }
-        [NonAction]
-        public float GetStars(int id)
-        {
-            float rating = 0;
-            float count = 0;
-            var reviews = db.Reviews.Where(r=>r.ProductId==id);
-
-            foreach (var review in reviews)
-            {
-                rating = review.Rating + rating;
-                count++;
-            }
-
-            if (count == 0)
-            {
-                return 0;
-            }
-            else
-            {
-                return Convert.ToInt32(rating / count);
-            }
-
-
-
-            /*
-            if (reviews == null)
-            {
-                return 0;
-            }
-            foreach (var review in reviews)
-            {
-                rating = rating + review.Rating;
-                count++;
-            }
-            
-            return rating / count;
-            */
-            return 0;
-            
-        }
+        
         }
     }

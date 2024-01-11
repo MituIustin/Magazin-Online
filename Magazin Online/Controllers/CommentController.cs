@@ -42,6 +42,7 @@ namespace Magazin_Online.Controllers
         public IActionResult New(Comment comment)
         {
             var prodid = TempData["id"];
+            prodid = comment.ProductId;
             try
             {
                 var currentUser = _userManager.GetUserAsync(User).Result;

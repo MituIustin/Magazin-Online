@@ -86,17 +86,21 @@ namespace Magazin_Online.Controllers
 
                 review.UserId = currentUser.Id;
                 review.User = currentUser;
+                Product prod = db.Products.Find(prodid);
+                var stars = GetStars(prod.ProductId);
+                prod.rating = stars;
+
 
                 db.Reviews.Add(review);
                 db.SaveChanges();
 
                 TempData["message"] = "Reviewl a fost adaugat cu succes.";
-                return RedirectToAction("Show", "Product", new { id = prodid });
+                return RedirectToAction("Show", "Product", new { id = prodid, section="descriere" ,page=1});
             }
             catch (Exception)
             {
-                TempData["message"] = "A aparut o eroare la adaugarea reviewului.";
-                return RedirectToAction("Show", "Product", new { id = prodid });
+                TempData["message"] = "A aparut o eroare la adaugarea review-lui.";
+                return RedirectToAction("Show", "Product", new { id = prodid, section = "descriere",page=1 });
             }
 
         }
@@ -116,14 +120,14 @@ namespace Magazin_Online.Controllers
                 db.Reviews.Remove(reviewToDelete);
                 db.SaveChanges();
 
-                TempData["message"] = "Comentariul a fost sters cu succes.";
+                TempData["message"] = "Review-ul a fost sters cu succes.";
             }
             else
             {
-                TempData["message"] = "Nu s-a putut sterge comentariul.";
+                TempData["message"] = "Nu s-a putut sterge review-ul.";
             }
 
-            return RedirectToAction("Show", "Product", new { id = prodid, page=1});
+            return RedirectToAction("Show", "Product", new { id = prodid, section = "review", page =1});
         }
 
         public IActionResult Edit(int id)
@@ -146,9 +150,9 @@ namespace Magazin_Online.Controllers
                 
                 if (review == null)
                 {
-                    TempData["message"] = "Comentariul nu a fost gasit.";
+                    TempData["message"] = "Review-ul nu a fost gasit.";
                     TempData["messageType"] = "alert-danger";
-                    return RedirectToAction("Show", "Product", new {id=review.ProductId });
+                    return RedirectToAction("Show", "Product", new {id=review.ProductId, section = "descriere",page=1 });
                 }
 
                 
@@ -161,7 +165,7 @@ namespace Magazin_Online.Controllers
 
                     TempData["message"] = "Review-ul a fost modificat cu succes.";
                     TempData["messageType"] = "alert-success";
-                    return RedirectToAction("Show", "Product", new { id = model.ProductId });
+                    return RedirectToAction("Show", "Product", new { id = model.ProductId, section = "descriere", page=1 });
                 }
                 catch (Exception)
                 {
@@ -172,6 +176,46 @@ namespace Magazin_Online.Controllers
             }
 
             return View(model);
+        }
+        [NonAction]
+        public float GetStars(int id)
+        {
+            float rating = 0;
+            float count = 0;
+            var reviews = db.Reviews.Where(r => r.ProductId == id);
+
+            foreach (var review in reviews)
+            {
+                rating = review.Rating + rating;
+                count++;
+            }
+
+            if (count == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return rating / count;
+            }
+
+
+
+            /*
+            if (reviews == null)
+            {
+                return 0;
+            }
+            foreach (var review in reviews)
+            {
+                rating = rating + review.Rating;
+                count++;
+            }
+            
+            return rating / count;
+            */
+            return 0;
+
         }
 
 
