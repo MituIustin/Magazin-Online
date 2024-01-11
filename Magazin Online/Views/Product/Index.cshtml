@@ -44,19 +44,6 @@
     </div>
 }
 
-<div class="row">
-    @foreach (Magazin_Online.Models.Product product in ViewBag.Products)
-    {
-        <div class="col-md-3 mb-4">
-            <div class="card" style="max-width: 300px">
-                @Html.Partial("ProductInfo", product)
-                <a class="btn btn-success" href="/Product/Show/@product.ProductId">Afisare produs</a>
-            </div>
-        </div>
-    }
-</div>
-
-
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Sorteaza
@@ -64,9 +51,25 @@
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="/Product/pretcresc/@ViewBag.searched">Crescator Dupa Pret</a>
         <a class="dropdown-item" href="/Product/pretdescresc/@ViewBag.searched">Descrescator Dupa Pret</a>
-        <a class="dropdown-item" >Dupa Nume</a>
+        <a class="dropdown-item" href="/Product?page=1&sort=rcresc&searched=@ViewBag.searched">Crescator Dupa Rating</a>
+        <a class="dropdown-item" href="/Product?page=1&sort=rdesc&searched=@ViewBag.searched">Desrescator Dupa Rating</a>
     </div>
 </div>
+
+<div class="row">
+    @foreach (Magazin_Online.Models.Product product in ViewBag.Products)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card" style="max-width: 300px">
+                @Html.Partial("ProductInfo", product)
+                <a class="btn btn-success" href="/Product/Show/@product.ProductId?section=descriere">Afisare produs</a>
+            </div>
+        </div>
+    }
+</div>
+
+
+
 <div>
     <nav aria-label="Page navigation example">
         <ul class="pagination">

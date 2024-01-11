@@ -34,22 +34,48 @@
             </form>
         </div>
     }
+    <br />
+
+    <br />
+    <br />
+
+    <br />
+
     @{
         var reviewModel = new Magazin_Online.Models.Review();
         reviewModel.ProductId = Model.ProductId;
     }
+    
+    <div class="btn-group" role="group" aria-label="Basic outlined example">
+        <a class="btn btn-primary" href="/Product/Show/@Model.ProductId?section=descriere">Descriere</a>
+        <a class="btn btn-primary" href="/Product/Show/@Model.ProductId?section=review">Review-uri</a>
+        <a class="btn btn-primary" href="/Product/Show/@Model.ProductId?section=comentarii">Comentarii</a>
+    </div>
+    <br />
 
+    <br />
 
-    @if(ViewBag.currentid!=null){
-        @Html.Partial("ReviewNew", reviewModel)
+    @if(ViewBag.section=="descriere"){
+        @Model.Description
     }
-    
-    
+    else if(ViewBag.section=="review"){
+        @if(ViewBag.currentid!=null){
+            @Html.Partial("ReviewNew", reviewModel)
+        }
+        @Html.Partial("ProductReview",Model)
 
-    @Html.Partial("ProductReview",Model)
+    }
 
-    <div class="p-3 border-1 border-top">
+    else if(ViewBag.section=="comentarii"){
+        <div class="p-3 border-1 border-top">
         <h3>Comentarii:</h3>
+        @if (ViewBag.currentid != null)
+        {
+            Comment comment = new Comment();
+                comment.ProductId = Model.ProductId;
+                @Html.Partial("AddComment",comment)
+
+        }
         @if (Model.Comments != null && Model.Comments.Any())
         {
             foreach (var comment in Model.Comments)
@@ -75,11 +101,10 @@
             <p>Nu exista comentarii pentru acest produs.</p>
         }
     </div>
-    @if(ViewBag.currentid!=null){
-        <div class="p-3 border-1 border-top">
-            <a class="btn btn-primary" href="/Comment/New?prod_id=@Model.ProductId">Adauga comentariu</a>
-        </div>
-
+        
     }
+    
+
+    
     
 </div>
