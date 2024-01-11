@@ -130,6 +130,11 @@ app.MapControllerRoute(
     defaults: new { controller = "Comment", action = "Edit" });
 app.MapRazorPages();
 
+app.MapControllerRoute(
+    name: "EditReview",
+    pattern: "Review/Edit/{id}",
+    defaults: new { controller = "Review", action = "Edit" });
+
 
 
 

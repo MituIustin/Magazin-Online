@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.IO;
 using System.Linq.Expressions;
+using System.Runtime.ConstrainedExecution;
 using Magazin_Online.Data;
 using Magazin_Online.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -114,11 +115,58 @@ namespace Magazin_Online.Controllers
                                          .Include("User")
                                          .Include("Comments")
                                          .Include("Comments.User")
+                                         .Include("Reviews")
+                                         .Include("Reviews.User")
                                          .Where(prod => prod.ProductId == id)
                                          .First();
 
 
             SetAccessRights();
+
+            var reviews=product.Reviews;
+
+            int _perPage = 3;
+
+            var currentUser = _userManager.GetUserAsync(User).Result;
+
+            ViewBag.role = User.IsInRole("Admin");
+
+            if (currentUser != null)
+            {
+                ViewBag.currentid = currentUser.Id;
+                TempData["currentUser"] = currentUser.Id; ;
+            }
+                
+            else
+            {
+                ViewBag.currentid = null;
+                TempData["currentUser"] = null;
+            }
+
+
+
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.message =
+                TempData["message"].ToString();
+                ViewBag.Alert = TempData["messageType"];
+            }
+
+            int total_reviews = reviews.Count();
+            var currentPage = Convert.ToInt32(HttpContext.Request.Query["page"]);
+            var offset = 0;
+
+            if (!currentPage.Equals(0))
+            {
+                offset = (currentPage - 1) * _perPage;
+            }
+
+            var paginatedReviews = reviews.Skip(offset).Take(_perPage);
+
+            ViewBag.lastPage = Math.Ceiling((float)total_reviews / (float)_perPage);
+
+            ViewBag.Reviews = paginatedReviews;
+
 
             var stars = GetStars(product.ProductId);
             product.rating = stars;

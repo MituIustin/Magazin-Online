@@ -1,0 +1,65 @@
+﻿@model Magazin_Online.Models.Product
+
+
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<div class="row">
+    @foreach (Magazin_Online.Models.Review review in ViewBag.reviews)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card" style="max-width: 300px">
+                @Html.Partial("ReviewInfo", review)
+            </div>
+        </div>
+    }
+    @if (Model.Reviews.Count==0)
+    {
+        <h2 class="text-center">Nu exista review-uri</h2>
+    }
+
+
+</div>
+
+
+
+
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link"
+                   href="/Product/Show/@Model.ProductId?page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                   href="/Product/Show/@Model.ProductId?page=@(i)">@(i)</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link"
+                   href="/Product/Show/@Model.ProductId?page=@(ViewBag.lastPage)" aria-
+                   label="Next">
+
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

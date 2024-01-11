@@ -1,0 +1,52 @@
+﻿@model Magazin_Online.Models.Review
+
+
+<div class="card-body">
+
+    <h5 class="card-title alert-success py-3 px-3 rounded-3">@Model.User</h5>
+
+    <div class="rating">
+        @{
+
+            int numStars = (int)Model.Rating;
+
+
+            for (int i = 0; i < numStars; i++)
+            {
+                <span class="fa fa-star checked"></span>
+            }
+
+
+            for (int i = numStars; i < 5; i++)
+            {
+                <span class="fa fa-star"></span>
+            }
+        }
+
+    </div>
+
+    <div class="card-text">@Model.Description</div>
+
+
+    <div>
+        @if(ViewBag.currentid==Model.UserId || ViewBag.role){
+            <form method="post" asp-controller="Review" asp-action="Delete" asp-route-id="@Model.ReviewId">
+                <button type="submit" class="btn btn-danger">Stergere</button>
+            </form>
+            <form  action="/Review/Edit/@Model.ReviewId">
+                <button class="btn btn-danger" type="submit">Edit</button>
+            </form>
+        }
+        
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+
+</div>
