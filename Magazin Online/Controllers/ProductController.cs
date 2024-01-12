@@ -172,6 +172,10 @@ namespace Magazin_Online.Controllers
 
             ViewBag.Reviews = paginatedReviews;
 
+            ViewBag.count = total_reviews;
+
+            ViewBag.comscount = product.Comments.Count;
+
 
             
             if (TempData.ContainsKey("message"))
@@ -305,7 +309,7 @@ namespace Magazin_Online.Controllers
                     TempData["message"] = "Produsul a fost modificat";
                     TempData["messageType"] = "alert-success";
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Show", new {id=product.ProductId, section="descriere"});
                 }
                 else
                 {
