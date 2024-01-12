@@ -8,14 +8,19 @@
 }
 <br />
 
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <form class="form-inline" method="get" action="/Product">
+        <input type="hidden" name="page" value="1">
+        <input type="hidden" name="sort" value="norm">
+        <input class="form-control mr-sm-2" type="search" name="searched" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+
 <div class="card">
 
-    @Html.Partial("ProductInfo", Model)
+    @Html.Partial("ProductShow", Model)
 
-    <div class="p-3 border-1 border-top">
-        <small class="text-muted">Categorie:</small>
-        <p class="text-secondary">@Model.Category?.Name</p>
-    </div>
     <form method="post" action="/BasketProduct/Add/@Model.ProductId">
         <input type="hidden" name="ProductId" value="@Model.ProductId" />
         <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
@@ -36,11 +41,6 @@
     }
     <br />
 
-    <br />
-    <br />
-
-    <br />
-
     @{
         var reviewModel = new Magazin_Online.Models.Review();
         reviewModel.ProductId = Model.ProductId;
@@ -55,8 +55,11 @@
 
     <br />
 
-    @if(ViewBag.section=="descriere"){
-        @Model.Description
+    @if (ViewBag.section == "descriere")
+    {
+        <div style="text-align: justify; font-size: 25px; line-height: 1.5;">
+            @Html.Raw(Model.Description)
+        </div>
     }
     else if(ViewBag.section=="review"){
         @if(ViewBag.currentid!=null){
