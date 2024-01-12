@@ -68,7 +68,7 @@
 
     else if(ViewBag.section=="comentarii"){
         <div class="p-3 border-1 border-top">
-        <h3>Comentarii:</h3>
+        
         @if (ViewBag.currentid != null)
         {
             Comment comment = new Comment();
@@ -76,6 +76,9 @@
                 @Html.Partial("AddComment",comment)
 
         }
+
+        <h3>Comentarii(@ViewBag.comscount):</h3>
+        
         @if (Model.Comments != null && Model.Comments.Any())
         {
             foreach (var comment in Model.Comments)

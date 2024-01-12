@@ -54,12 +54,12 @@ namespace Magazin_Online.Controllers
                 db.SaveChanges();
                 
                 TempData["message"] = "Comentariul a fost adaugat cu succes.";
-                return RedirectToAction("Show", "Product",new {id=prodid });
+                return RedirectToAction("Show", "Product",new {id=prodid, section="comentarii" });
             }
             catch (Exception)
             {
                 TempData["message"] = "A aparut o eroare la adaugarea comentariului.";
-                return RedirectToAction("Show", "Product", new { id = prodid });
+                return RedirectToAction("Show", "Product", new { id = prodid, section = "comentarii" });
             }
         }
 
@@ -68,6 +68,7 @@ namespace Magazin_Online.Controllers
         {
            
             var commentToDelete = db.Comments.Find(id);
+            var prodid = commentToDelete.ProductId;
 
             // Check if the user is authorized to delete the comment
             if (commentToDelete != null && (User.IsInRole("Admin") || commentToDelete.UserId == _userManager.GetUserId(User)))
@@ -82,7 +83,7 @@ namespace Magazin_Online.Controllers
                 TempData["message"] = "Nu s-a putut sterge comentariul.";
             }
 
-            return RedirectToAction("Index", "Product", new { page = 1, sort = "norm", searched = (string)null });
+            return RedirectToAction("Show", "Product", new { id=prodid, section="comentarii", page=1});
         }
 
         public IActionResult Edit(int id)
@@ -121,7 +122,7 @@ namespace Magazin_Online.Controllers
 
                     TempData["message"] = "Comentariul a fost modificat cu succes.";
                     TempData["messageType"] = "alert-success";
-                    return RedirectToAction("Index", "Product", new { page = 1, sort = "norm", searched = (string)null });
+                    return RedirectToAction("Show", "Product", new { id=model.ProductId,section="comentarii",page = 1 });
                 }
                 catch (Exception)
                 {
