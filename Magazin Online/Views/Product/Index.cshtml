@@ -5,25 +5,6 @@
     ViewBag.Title = "Index";
 }
 
-@*
-<div class="text-center">
-    @if (User.IsInRole("Admin") || User.IsInRole("Contributor"))
-    {
-        <a class="btn btn-primary" href="/Product/New">Adaugare articol</a>
-    }
-
-    @if (User.IsInRole("Admin"))
-    {
-        <a class="btn btn-info" href="/Request/Index">Request-uri</a>
-    }
-
-    @if (User.IsInRole("Admin"))
-    {
-        <a class="btn btn-info" href="/Category/Index">Vezi categorii</a>
-    }
-    
-</div>
-*@
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -32,9 +13,26 @@
 </head>
 <br />
 
-<h2 class="text-center">Afisare produse</h2>
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <form class="form-inline" method="get" action="/Product">
+        <input type="hidden" name="page" value="1">
+        <input type="hidden" name="sort" value="norm">
+        <input class="form-control mr-sm-2" type="search" name="searched" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 
-<br />
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sorteaza
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Product/pretcresc/@ViewBag.searched">Crescator Dupa Pret</a>
+            <a class="dropdown-item" href="/Product/pretdescresc/@ViewBag.searched">Descrescator Dupa Pret</a>
+            <a class="dropdown-item" href="/Product?page=1&sort=rcresc&searched=@ViewBag.searched">Crescator Dupa Rating</a>
+            <a class="dropdown-item" href="/Product?page=1&sort=rdesc&searched=@ViewBag.searched">Desrescator Dupa Rating</a>
+        </div>
+    </div>
+</nav>
 
 
 @if (TempData["message"] != null)
@@ -44,17 +42,7 @@
     </div>
 }
 
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Sorteaza
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="/Product/pretcresc/@ViewBag.searched">Crescator Dupa Pret</a>
-        <a class="dropdown-item" href="/Product/pretdescresc/@ViewBag.searched">Descrescator Dupa Pret</a>
-        <a class="dropdown-item" href="/Product?page=1&sort=rcresc&searched=@ViewBag.searched">Crescator Dupa Rating</a>
-        <a class="dropdown-item" href="/Product?page=1&sort=rdesc&searched=@ViewBag.searched">Desrescator Dupa Rating</a>
-    </div>
-</div>
+
 
 <div class="row">
     @foreach (Magazin_Online.Models.Product product in ViewBag.Products)
