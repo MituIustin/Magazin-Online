@@ -135,6 +135,11 @@ app.MapControllerRoute(
     pattern: "Review/Edit/{id}",
     defaults: new { controller = "Review", action = "Edit" });
 
+app.MapControllerRoute(
+    name: "GiveRole",
+    pattern: "Administration/GiveRole/{id}/{rol}",
+    defaults: new { controller = "Administration", action = "GiveRole" });
+
 
 
 
