@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "All Users";
+}
+
+<h1>All Users</h1>
+
+
+ <h2>Admini</h2>
+
+    @foreach (var user in ViewBag.admini)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">@user.UserName</h5>
+            </div>
+            <div class="card-footer">
+            <form method="post" action="/Administration/GiveRole/@user.Id/Admin">
+                <button class="btn btn-danger" type="submit">Ofera rolul de admin</button>
+            </form>
+            <form method="post" action="/Administration/GiveRole/@user.Id/Contribuor">
+                <button class="btn btn-danger" type="submit">Ofera rolul de contribuitor</button>
+            </form>
+            <form method="post" action="/Administration/GiveRole/@user.Id/User">
+                <button class="btn btn-danger" type="submit">Ofera rolul de user</button>
+            </form>
+            <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+
+ <h2>Contributor</h2>
+    @foreach (var user in ViewBag.colaboratori)
+    {
+        
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">@user.UserName</h5>
+            </div>
+            <div class="card-footer">
+                <form method="post" action="/Administration/GiveRole/@user.Id/Admin">
+                    <button class="btn btn-danger" type="submit">Ofera rolul de admin</button>
+                </form>
+                <form method="post" action="/Administration/GiveRole/@user.Id/Contribuor">
+                    <button class="btn btn-danger" type="submit">Ofera rolul de contribuitor</button>
+                </form>
+                <form method="post" action="/Administration/GiveRole/@user.Id/User">
+                    <button class="btn btn-danger" type="submit">Ofera rolul de user</button>
+                </form>
+                    <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+
+    
+ <h2>Useri</h2>
+    @foreach (var user in ViewBag.useri)
+    {
+        
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">@user.UserName</h5>
+            </div>
+            <div class="card-footer">
+            <form method="post" action="/Administration/GiveRole/@user.Id/Admin">
+                <button class="btn btn-danger" type="submit">Ofera rolul de admin</button>
+            </form>
+            <form method="post" action="/Administration/GiveRole/@user.Id/Contribuor">
+                <button class="btn btn-danger" type="submit">Ofera rolul de contribuitor</button>
+            </form>
+            <form method="post" action="/Administration/GiveRole/@user.Id/User">
+                <button class="btn btn-danger" type="submit">Ofera rolul de user</button>
+            </form>
+            <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
