@@ -53,7 +53,7 @@ namespace Magazin_Online.Controllers
             }
             
             
-            int _perPage = 3;
+            int _perPage = 20;
             
             if(ViewBag.sort=="pcresc")
             {
@@ -233,7 +233,7 @@ namespace Magazin_Online.Controllers
                 return View(product);
             }
         }
-
+        [Authorize(Roles ="Admin")]
         public IActionResult Accept(int id)
         {
             Product product=db.Products.Find(id);
@@ -243,7 +243,7 @@ namespace Magazin_Online.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Contributor")]
         public ActionResult Delete(int id)
         {
             Product product = db.Products.Include("Comments")

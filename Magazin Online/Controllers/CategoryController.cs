@@ -27,6 +27,7 @@ namespace Magazin_Online.Controllers
             _roleManager = roleManager;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             var categories = from category in db.Categories
@@ -34,8 +35,8 @@ namespace Magazin_Online.Controllers
             ViewBag.Categories = categories;
             return View();
         }
-        [Authorize(Roles = "Admin")]
 
+        [Authorize(Roles = "Admin")]
         public IActionResult New()
         {
             Category category = new Category();
