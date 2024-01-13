@@ -6,16 +6,38 @@
         @ViewBag.Message
     </div>
 }
-<br />
 
-<nav class="navbar navbar-light bg-light justify-content-between">
-    <form class="form-inline" method="get" action="/Product">
+<nav class="navbar navbar-light justify-content-center">
+    <form class="form-inline w-75 align-items-center" method="get" action="/Product">
         <input type="hidden" name="page" value="1">
         <input type="hidden" name="sort" value="norm">
-        <input class="form-control mr-sm-2" type="search" name="searched" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2 custom-search-input" type="search" name="searched" placeholder="Search" aria-label="Search">
     </form>
+    <button class="btn btn-outline-success my-2 my-sm-0 custom-search-button ml-auto" type="submit">Search</button>
 </nav>
+
+<style>
+    .custom-search-input {
+        border-color: #28a745;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%; 
+    }
+
+    .custom-search-button {
+        background-color: #28a745;
+        color: #ffffff;
+        border-radius: 10px;
+        margin-left: 5px;
+    }
+
+    .custom-search-button:hover {
+        background-color: #218838;
+    }
+    
+</style>
+
+
 
 <div class="card">
 
@@ -53,8 +75,7 @@
     </div>
     <br />
 
-    <br />
-
+   
     @if (ViewBag.section == "descriere")
     {
         <div style="text-align: justify; font-size: 25px; line-height: 1.5;">
@@ -80,27 +101,34 @@
 
         }
 
-        <h3>Comentarii(@ViewBag.comscount):</h3>
+            <h3>Comentarii(@ViewBag.comscount):</h3>
+      
         
         @if (Model.Comments != null && Model.Comments.Any())
         {
-            foreach (var comment in Model.Comments)
-            {
-                <div class="comment">
-                    <p>@comment.Content</p>
-                    <p>By: @comment.User.UserName</p>
+                @foreach (var comment in Model.Comments)
+                {
+                    <br />
+                    <div class="comment">
+                        <p>@comment.Content</p>
+                        <p>By: @comment.User.UserName</p>
 
-                    @if (User.IsInRole("Admin") || User.Identity.Name == comment.User.UserName)
-                    {
-                        <form method="post" asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.CommentId">
-                            <button type="submit" class="btn btn-danger">Stergere</button>
-                        </form>
+                        <div class="d-flex justify-content-end">
+                            @if (User.IsInRole("Admin") || User.Identity.Name == comment.User.UserName)
+                            {
+                                <a class="btn btn-success alert-success ms-2" asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.CommentId">Editare</a>
 
-                        <a class="btn btn-danger" asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.CommentId">Editare</a>
-                    }
-                    <hr>
-                </div>
-            }
+                                <form method="post" asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.CommentId">
+                                    <button type="submit" class="btn btn-danger">Stergere</button>
+                                </form>
+
+                            }
+                        </div>
+
+                        <hr>
+                    </div>
+                }
+
         }
         else
         {

@@ -358,6 +358,10 @@ namespace Magazin_Online.Controllers
             }
             return selectList;
         }
-        
+        public int GetProductCountForCategory(int categoryId)
+        {
+            return db.Products.Count(p => p.CategoryId == categoryId);
         }
+
+    }
     }

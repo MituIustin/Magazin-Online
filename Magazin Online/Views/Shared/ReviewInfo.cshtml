@@ -3,7 +3,7 @@
 
 <div class="card-body">
 
-    <h5 class="card-title alert-success py-3 px-3 rounded-3">@Model.User</h5>
+    <div class="card-text px-3 py-3" style="background-color: #dddddd; color: #000000; font-size: 16px;">@Model.Description</div>
 
     <div class="rating">
         @{
@@ -25,18 +25,22 @@
 
     </div>
 
-    <div class="card-text">@Model.Description</div>
-
+    <h5 class="card-title py-1 rounded-3" style="color: #000000; font-size: 14px;">@Model.User</h5>
 
     <div>
-        @if(ViewBag.currentid==Model.UserId || ViewBag.role){
-            <form method="post" asp-controller="Review" asp-action="Delete" asp-route-id="@Model.ReviewId">
-                <button type="submit" class="btn btn-danger">Stergere</button>
-            </form>
-            <form  action="/Review/Edit/@Model.ReviewId">
-                <button class="btn btn-danger" type="submit">Edit</button>
-            </form>
+        @if (ViewBag.currentid == Model.UserId || ViewBag.role)
+        {
+            <div class="d-flex align-items-center">
+                <form method="post" asp-controller="Review" asp-action="Delete" asp-route-id="@Model.ReviewId">
+                    <button type="submit" class="btn btn-danger">Stergere</button>
+                </form>
+
+                <form action="/Review/Edit/@Model.ReviewId" class="ms-2">
+                    <button class="btn btn-success alert-success" type="submit">Edit</button>
+                </form>
+            </div>
         }
+
         
     </div>
 

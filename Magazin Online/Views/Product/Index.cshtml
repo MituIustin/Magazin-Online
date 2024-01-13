@@ -13,16 +13,15 @@
 </head>
 <br />
 
-<nav class="navbar navbar-light bg-light justify-content-between">
-    <form class="form-inline" method="get" action="/Product">
+<nav class="navbar navbar-light">
+    <form class="form-inline w-75 align-items-center" method="get" action="/Product">
         <input type="hidden" name="page" value="1">
         <input type="hidden" name="sort" value="norm">
-        <input class="form-control mr-sm-2" type="search" name="searched" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2 custom-search-input" type="search" name="searched" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0 custom-search-button" type="submit">Search</button>
     </form>
-
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle custom-sort-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sorteaza
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -33,6 +32,34 @@
         </div>
     </div>
 </nav>
+
+
+<style>
+    .custom-search-input {
+        border-color: #28a745;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+    }
+
+    .custom-search-button {
+        background-color: #28a745;
+        color: #ffffff;
+        border-radius: 10px;
+        margin-left: 5px;
+    }
+
+    .custom-sort-button {
+        border-radius: 10px;
+        margin-left: 5px;
+    }
+
+    .custom-search-button:hover {
+        background-color: #218838;
+    }
+</style>
+
+
 
 
 @if (TempData["message"] != null)

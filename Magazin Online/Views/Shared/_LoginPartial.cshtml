@@ -1,24 +1,50 @@
 ﻿@using Microsoft.AspNetCore.Identity
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
-</ul>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="custom-btn">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+        </li>
+
+    }
+    else
+    {
+        <li class="custom-btn">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="custom-btn">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
+
+
+<style>
+
+    .remove-style{
+        text-decoration: none;
+        border: none;
+        background-color: white;
+    }
+
+    .remove-style:hover {
+        background-color: #ddd;
+    }
+
+    .custom-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        background-color: white;
+        color: darkgreen;
+    }
+
+    .custom-btn:hover {
+        background-color: #ddd;
+    }
+</style>

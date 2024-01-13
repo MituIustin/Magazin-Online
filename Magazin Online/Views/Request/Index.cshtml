@@ -7,9 +7,10 @@
 <table class="table">
     <thead>
         <tr>
-            <th>ID</th>
+            <th></th>
             <th>Nume Produs</th>
-            <th>Preț</th>
+            <th>Pret</th>
+            
             <th></th>
         </tr>
     </thead>
@@ -17,16 +18,23 @@
         @foreach (var produs in ViewBag.Requests)
         {
             <tr>
-                <td>@produs.ProductId</td>
+                <td>
+                    @if (produs.Photo != null && produs.Photo.Length > 0)
+                    {
+                        <img src="data:image/png;base64,@Convert.ToBase64String(produs.Photo)" alt="Imagine produs" width="75" height="50" />
+                    }
+                </td>
+
                 <td>@produs.Title</td>
                 <td>@produs.Description</td>
+
                 <td>
-                    <a class="btn btn-success" href="/Product/Show/@produs.ProductId">Afisare articol</a>
                     <a class="btn btn-success" href="/Product/Accept/@produs.ProductId">Accepta articol</a>
                     <form method="post" action="/Product/Delete/@produs.ProductId">
                         <button class="btn btn-danger" type="submit">Sterge articol</button>
                     </form>
                 </td>
+           
             </tr>
         }
     </tbody>
