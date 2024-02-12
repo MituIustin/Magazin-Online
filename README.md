@@ -7,7 +7,7 @@ This project was carried out as part of the Web Application Development course a
 
 ![daw1](https://raw.githubusercontent.com/MituIustin/Magazin-Online/master/readmeimg/daw1.PNG)
 
-![daw6](https://raw.githubusercontent.com/MituIustin/Magazin-Online/master/readmeimg/daw6.PNG)
+![daw8](https://raw.githubusercontent.com/MituIustin/Magazin-Online/master/readmeimg/daw8.PNG)
 
 
 ## Containing:
